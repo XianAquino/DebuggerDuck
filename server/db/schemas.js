@@ -1,6 +1,10 @@
 const mongoose = require ('mongoose');
 const Schema = mongoose.Schema;
+const connection = require('./connection.js')
+const autoIncrement = require('mongoose-auto-increment');
 mongoose.Promise = global.Promise;
+//initializes a autoincrement to keep better track of our restaurants
+autoIncrement.initialize(connection);
 
 // initiate a database variable to attach schemas to
 let db = {};
@@ -12,6 +16,13 @@ const UserSchema = new Schema ({
 	picture: String,
 	groups: [{group_id: String, karma: {type: Number, default:0}}]
 });
+
+var restaurantSchema = new Schema({
+  name : String,
+  menu : [ {menuItem: String, price:Number} ]
+});
+
+
 
 // let getNameFromFb = function(input){
 // 	//TODO?: Using fbs api, retrieve the name from fb
@@ -45,7 +56,8 @@ const OrderSchema = new Schema ({
 	requests: [{user_id: String, picture: String, text: String}],
 	createdAt: { type : Date, default: Date.now }
 })
-
+restaurantSchema.plugin(autoIncrement.plugin, { model: 'restaurant' });
+db.Restaurant = mongoose.model('restaurant', restaurantSchema);
 db.User = mongoose.model('user', UserSchema);
 db.Group = mongoose.model('group', GroupSchema);
 db.Order = mongoose.model('order', OrderSchema);
