@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "npm run watch",
+    "start": "npm run build | npm run server",
     "build": "./node_modules/.bin/gulp build",
     "server": "nodemon --ignore 'client/*.js' server/server.js",
     "watch": "./node_modules/.bin/gulp watch"
