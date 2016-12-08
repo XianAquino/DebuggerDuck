@@ -18,8 +18,7 @@ class Volunteer extends Component {
       //requests is an array of stuff obtained from the database. 
       //It can be added to by the user by typing into the inputs and submitting.
       requests:this.props.volunteer.requests,
-      count:0,
-      menuUrl:undefined
+      count:0
     };
   }
   onTextChange(event) {
