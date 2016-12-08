@@ -144,6 +144,7 @@ app.get('/menuItem/:name',function(req,res){
     console.log(data[0])
     data[0].menu.push({menuItem:menuItem,price:price})
     data[0].save();
+    console.log(`post successful to ${name}! Added ${menuItem} at $${price}`)
     res.send(data)
   })
  })
