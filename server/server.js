@@ -26,12 +26,6 @@ module.exports.NODEPORT =  4040;
 if (!process.env.clientID) {
   var credentials = require('./env/config.js')
 }
-var yelp = new Yelp({
-  consumer_key: 'F0oFzKCB9-_oH1V1p3vyXA',
-  consumer_secret: 'LtZ-gFl6mq0RaFyuFYkY0yZB5JI',
-  token: 'yN6osb7uQvqQa8hjvMcOBxa_G-fOQLMt',
-  token_secret: 'PAL9BfB8XOjAjttSf--bkhI4JCs',
-});
 var clientID = process.env.clientID || credentials.facebook.clientID
 var clientSecret = process.env.clientSecret || credentials.facebook.clientSecret
 var callbackURL = process.env.callbackURL || credentials.facebook.callbackURL
@@ -101,13 +95,7 @@ app.get('/facebook/oauth', passport.authenticate('facebook', {failureRedirect: '
     }
     res.cookie('fr-session', cookie, { maxAge: 900000, httpOnly: true }).redirect('/');
 });
-app.get('/fetchmenu/:location', function(req,res){
-  var location = req.params.location
-
-  yelp.search({term:`${location}`, location: 'Austin'}).then(function(data){
-    res.send(data.businesses[0].url.replace(/biz/i,'menu'))
-  })
-})
+//returns all restaurants in our database
 app.get('/restaurants',function(req,res){
   db.Restaurant.find({}, function(err, restaurants) {
     var allRestaurants = [];
@@ -118,6 +106,7 @@ app.get('/restaurants',function(req,res){
     res.send(allRestaurants);  
   });
 })
+//will add a new restaurant to our database when provided a name
 app.post('/restaurants/:name',function(req,res){
   // var name = req.params.name
   // console.log(req.params.name)
@@ -130,12 +119,14 @@ app.post('/restaurants/:name',function(req,res){
     res.json(201, post)
   })
  })
+//will get all menu items for the restaurant whos name is provided
 app.get('/menuItem/:name',function(req,res){
   var name = req.params.name
   db.Restaurant.find({name:name},function(err,data){
     res.send(data[0].menu)
   })
 })
+//will add a menu item to a restaurant when provided name of that restaurant, the menu item, and the price of it
  app.post('/menuItem/:name/:menuItem/:price',function(req,res){
   var name = req.params.name
   var menuItem = req.params.menuItem
