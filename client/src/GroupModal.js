@@ -55,7 +55,7 @@ class RequestModal extends React.Component {
     let {isOpen, isSubOpen} = this.state;
     return (
         <div>
-          Don't see any groups you like?!!!!!!! Why not ...
+          Don't see any groups you like?!!!!! Why not ...
           <button className="red-button" onClick={this.openModal.bind(this)}>
             Create a new group
           </button>

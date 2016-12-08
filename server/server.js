@@ -169,8 +169,14 @@ io.on('connection', function(socket){
     console.log("groups pass" );
     controller.groups()
     .then(groups => {
+      console.log("ppass promise", groups);
       io.emit('groupsAdded',groups)
     })
+  })
+
+  socket.on('request', function(){
+    console.log("request pass");
+    controller.groups
   })
 
   socket.on('disconnect', function(){

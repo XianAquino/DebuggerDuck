@@ -79,9 +79,9 @@ class Runner extends Component {
     //this.setState({groupChosen:true});
     axios.post('/api/group', {data:{"groupName":groupName}})
       .then( response =>{
-      //
-        socket.emit('groups');
         this.getGroups();
+        socket.emit('groups');
+
       })
        .catch(error => {
         console.log('Error while getting groups: ', error);
@@ -94,8 +94,9 @@ class Runner extends Component {
       .then( response => {
         this.setState( {groups:response.data.data} );
         //console.log('Group State?',this.state.groups);
-        socket.on('groupsAdded',function(groups){
-          this.setState( {groups:response.data.data} );
+
+        socket.on('groupsAdded',(groups) => {
+          this.setState( {groups:groups} );
         })
     })
       .catch(error => {
