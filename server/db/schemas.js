@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const connection = require('./connection.js')
 const autoIncrement = require('mongoose-auto-increment');
 mongoose.Promise = global.Promise;
+//initializes a autoincrement to keep better track of our restaurants
 autoIncrement.initialize(connection);
 
 // initiate a database variable to attach schemas to
@@ -15,6 +16,7 @@ const UserSchema = new Schema ({
 	picture: String,
 	groups: [{group_id: String, karma: {type: Number, default:0}}]
 });
+
 var restaurantSchema = new Schema({
   name : String,
   menu : [ {menuItem: String, price:Number} ]
