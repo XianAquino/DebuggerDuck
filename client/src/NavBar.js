@@ -32,6 +32,7 @@ class NavBar extends Component {
   logOut() {
     this.setState({loggedIn: false})
     this.props.postLogout();
+    this.forceUpdate();
   }
   render() { 
   		return ( 

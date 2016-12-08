@@ -8,6 +8,7 @@ const dbConnection = require('./db/connection.js');
 const session = require('express-session');
 const passport = require('passport');
 const Strategy = require('passport-facebook').Strategy;
+const Yelp = require ('yelp')
 
 // Use express and export it
 const app = express();
@@ -25,6 +26,12 @@ module.exports.NODEPORT = process.env.PORT || 4040;
 if (!process.env.clientID) {
   var credentials = require('./env/config.js')
 }
+var yelp = new Yelp({
+  consumer_key: 'F0oFzKCB9-_oH1V1p3vyXA',
+  consumer_secret: 'LtZ-gFl6mq0RaFyuFYkY0yZB5JI',
+  token: 'yN6osb7uQvqQa8hjvMcOBxa_G-fOQLMt',
+  token_secret: 'PAL9BfB8XOjAjttSf--bkhI4JCs',
+});
 var clientID = process.env.clientID || credentials.facebook.clientID
 var clientSecret = process.env.clientSecret || credentials.facebook.clientSecret
 var callbackURL = process.env.callbackURL || credentials.facebook.callbackURL
@@ -104,7 +111,6 @@ app.use(express.static(path.join(__dirname, '/../client/public')));
 app.use('/dist', express.static(path.join(__dirname, '/../client/dist')));
 // Serve the node modules
 app.use('/lib', express.static(path.join(__dirname, '/../node_modules')));
-
 //Wasted a lot of time trying to get passport.authenticate to work inside the router so I placed it here instead
 app.get('/login', passport.authenticate('facebook'));
 app.get('/facebook/oauth', passport.authenticate('facebook', {failureRedirect: '/login'}),
@@ -115,7 +121,30 @@ app.get('/facebook/oauth', passport.authenticate('facebook', {failureRedirect: '
     }
     res.cookie('fr-session', cookie, { maxAge: 900000, httpOnly: true }).redirect('/');
 });
+app.get('/fetchmenu/:location', function(req,res){
+  var location = req.params.location
 
+
+  console.log("passsss");
+  //request(`https:`)
+  yelp.search({term:`${location}`, location: 'Austin'}).then(function(data){
+    //var rest = data.filter((rest)=>rest.name = 'chipotle')
+    // var names = []
+    // for (var i = 0; i < data.businesses.length;i++) {
+    //   names.push(data.businesses[i].name)
+    // }
+    res.send(data.businesses[0].url.replace(/biz/i,'menu'))
+  })
+    //yelp.business('yelp-austin')
+   // .then(function (data) {
+    //  console.log(data);
+   //   res.json(data);
+    //})
+  //  .catch(function (err) {
+    //  console.error(err);
+    //});
+   //request()
+ });
 // Listen for requests on /api and then use the router to determine
 // what happens with the requests
 app.use('/api', router);

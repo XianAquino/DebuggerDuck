@@ -1,9 +1,10 @@
 //This component is the child component of volunteerRequestContainer.js and the parent of request.js
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-
+import Menu from './Menu.js'
 import Request from './Request.js';
 import RequestModal from './RequestModal.js';
+import GetMenu from './lib/getMenu.js'
 
 class Volunteer extends Component {
   constructor(props) {
@@ -18,7 +19,8 @@ class Volunteer extends Component {
       //requests is an array of stuff obtained from the database. 
       //It can be added to by the user by typing into the inputs and submitting.
       requests:this.props.volunteer.requests,
-      count:0
+      count:0,
+      menuUrl:undefined
     };
   }
   onTextChange(event) {
@@ -36,6 +38,11 @@ class Volunteer extends Component {
     this.props.getDataForRendering();
     this.setState({requests:this.props.volunteer.requests})
   }
+  componentDidMount(){
+    GetMenu({location:this.props.volunteer.location},(menuUrl)=>{
+      this.setState({menuUrl:menuUrl})
+    })
+  }
 
 
   render() {
@@ -43,6 +50,7 @@ class Volunteer extends Component {
         <div className='volunteer-div'>
           <img className='small-profile-pic' src={this.props.volunteer.picture}/>
           {this.props.volunteer.order_user} is going to {this.props.volunteer.location} at {this.props.volunteer.time}.
+          <Menu Menu={this.state.menuUrl}/>
         
         {this.state.requests.map(request =>
           //this goes through the array of requests and maps them using the child component, Request.js
