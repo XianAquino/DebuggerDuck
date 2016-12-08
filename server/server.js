@@ -15,7 +15,7 @@ const app = express();
 module.exports.app = app;
 
 // Check to see if there is a port environment variable or just use port 4040 instead
-module.exports.NODEPORT = process.env.PORT || 4040;
+module.exports.NODEPORT =  4040;
 
 
 //OAuth strategies require a 'verify' function that receives accessToken
@@ -85,26 +85,6 @@ app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true 
 app.use(passport.initialize());
 app.use(passport.session());
 
-// // set a cookie
-// app.use(function (req, res, next) {
-//   // check if client sent cookie
-//   var cookie = req.cookies.cookieName;
-//   if (cookie === undefined)
-//   {
-//     // no: set a new cookie
-//     var randomNumber=Math.random().toString();
-//     randomNumber=randomNumber.substring(2,randomNumber.length);
-//     res.cookie('cookieName',randomNumber, { maxAge: 900000, httpOnly: true });
-//     console.log('cookie created successfully');
-//   } 
-//   else
-//   {
-//     // yes, cookie was already present 
-//     console.log('cookie exists', cookie);
-//   } 
-//   next();
-// });
-
 // Serve the static client HTML files
 app.use(express.static(path.join(__dirname, '/../client/public')));
 // Serve the static client React files
@@ -124,27 +104,52 @@ app.get('/facebook/oauth', passport.authenticate('facebook', {failureRedirect: '
 app.get('/fetchmenu/:location', function(req,res){
   var location = req.params.location
 
-
-  console.log("passsss");
-  //request(`https:`)
   yelp.search({term:`${location}`, location: 'Austin'}).then(function(data){
-    //var rest = data.filter((rest)=>rest.name = 'chipotle')
-    // var names = []
-    // for (var i = 0; i < data.businesses.length;i++) {
-    //   names.push(data.businesses[i].name)
-    // }
     res.send(data.businesses[0].url.replace(/biz/i,'menu'))
   })
-    //yelp.business('yelp-austin')
-   // .then(function (data) {
-    //  console.log(data);
-   //   res.json(data);
-    //})
-  //  .catch(function (err) {
-    //  console.error(err);
-    //});
-   //request()
- });
+})
+app.get('/restaurants',function(req,res){
+  db.Restaurant.find({}, function(err, restaurants) {
+    var allRestaurants = [];
+    restaurants.forEach(function(restaurant) {
+      allRestaurants[restaurant.id] = restaurant.name;
+    });
+
+    res.send(allRestaurants);  
+  });
+})
+app.post('/restaurants/:name',function(req,res){
+  // var name = req.params.name
+  // console.log(req.params.name)
+   var restaurant = new db.Restaurant({
+    name: req.params.name,
+    menu: []
+  })
+  restaurant.save(function (err, post) {
+    if (err) { return next(err) }
+    res.json(201, post)
+  })
+ })
+app.get('/menuItem/:name',function(req,res){
+  var name = req.params.name
+  db.Restaurant.find({name:name},function(err,data){
+    res.send(data[0].menu)
+  })
+})
+ app.post('/menuItem/:name/:menuItem/:price',function(req,res){
+  var name = req.params.name
+  var menuItem = req.params.menuItem
+  var price = req.params.price
+  db.Restaurant.find({name:name},function(err,data){
+    console.log(data[0])
+    data[0].menu.push({menuItem:menuItem,price:price})
+    data[0].save();
+    res.send(data)
+  })
+ })
+
+
+
 // Listen for requests on /api and then use the router to determine
 // what happens with the requests
 app.use('/api', router);

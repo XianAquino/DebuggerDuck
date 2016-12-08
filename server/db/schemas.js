@@ -1,6 +1,9 @@
 const mongoose = require ('mongoose');
 const Schema = mongoose.Schema;
+const connection = require('./connection.js')
+const autoIncrement = require('mongoose-auto-increment');
 mongoose.Promise = global.Promise;
+autoIncrement.initialize(connection);
 
 // initiate a database variable to attach schemas to
 let db = {};
@@ -51,6 +54,7 @@ const OrderSchema = new Schema ({
 	requests: [{user_id: String, picture: String, text: String}],
 	createdAt: { type : Date, default: Date.now }
 })
+restaurantSchema.plugin(autoIncrement.plugin, { model: 'restaurant' });
 db.Restaurant = mongoose.model('restaurant', restaurantSchema);
 db.User = mongoose.model('user', UserSchema);
 db.Group = mongoose.model('group', GroupSchema);
