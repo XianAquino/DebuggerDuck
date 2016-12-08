@@ -12,10 +12,20 @@ import {
 class VolunteerModal extends React.Component {
   constructor(props){
     super(props);
-    this.state ={
+    this.state = {
       isOpen: false,
       time: '',
       location: '',
+      restaurants: ['Chipotle', 'Jimmy Johns', 'Eureka'],
+      menus: {
+        Chipotle: [
+          {
+            id: '1',
+            name: 'Chicken Burrito',
+            price: '6.95'
+          }
+        ]
+      }
     };
   }
     onTimeChange(event) {
@@ -76,19 +86,31 @@ class VolunteerModal extends React.Component {
             </ModalHeader>
             <div className='modal-inside'>
               <div>
-                &nbsp; Where are you going?? WE ARE CHANGING THIS &nbsp;
-                <input 
+                &nbsp; Where are you going?? &nbsp;
+                <select
                 onChange={this.onLocationChange.bind(this)} 
                 className='modal-input' 
                 type="text" 
-                id="location"/>
+                id="location">
+                {this.state.restaurants.map(restaurant => {
+                  return (
+                    <option value={restaurant}>{restaurant}</option>
+                  )
+                })}
+                </select>
+                {/*<input 
+                onChange={this.onLocationChange.bind(this)} 
+                className='modal-input' 
+                type="text" 
+                id="location"/> */}
               </div>
               <div>
                 &nbsp; What time? &nbsp;
                 <input 
                 onChange={this.onTimeChange.bind(this)} 
                 className='modal-input second-input' 
-                type="text" 
+                type="time"
+                step="1800"
                 id="time"/>
               </div>
             </div>
