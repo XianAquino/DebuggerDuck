@@ -8,7 +8,8 @@ import FacebookButton from './FacebookButton.js'
 class NavBar extends Component {
   constructor(props) {
     super(props);
-
+    console.log("propS!!!!!!!", props)
+    
     this.state = {
       loggedIn: false,
       //I have not yet done anything with the karma besides hard code it as 0 and display it.
@@ -16,7 +17,7 @@ class NavBar extends Component {
       karma: 0
     };
   }
-
+  console.log("NAVBAR STATE!!!!", this.state)
   //Note: Navbar does not rerender when the app renders. How can we change this??
   
   //Note: All this does is toggle loggedIn back and forth so I don't have to manually change App.js's state. 
@@ -39,7 +40,7 @@ class NavBar extends Component {
     		<FacebookButton 
           logOut={this.logOut.bind(this)} 
           loggedIn={this.state.loggedIn}/>
-    		<div className='karma'>Karma: {this.state.karma}</div>
+    		<div className='karma'>Karma: {this.props.karma}</div>
         <img className='nav-pic' src={this.props.picture}/>
         <div className='username'>{this.props.username} </div>
     	</div>

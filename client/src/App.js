@@ -119,6 +119,7 @@ class Runner extends Component {
         this.setState({picture: response.data.picture});
         this.setState({userId: response.data._id});
         this.setState({karma: response.data.groups[0].karma})
+        console.log("KARMA STATE!!!", this.state.karma)
         console.log(response.data.picture)
       })
       .catch(error =>{
@@ -205,6 +206,7 @@ class Runner extends Component {
 // (Which in turn, will render the request component(s))
 
   render() {
+    console.log("RENDER STATE!!!!!", this.state)
     if (this.state.loggedIn===false){
       return (
         <div>
@@ -221,7 +223,8 @@ class Runner extends Component {
           loggedIn={true}
           postLogout={this.postLogout.bind(this)}
           postLogin={this.postLogin.bind(this)}
-          username={this.state.username} 
+          username={this.state.username}
+          karma={this.state.karma}   
           picture={this.state.picture}/>
           <div className='greeting'> Hi, {this.state.username}.</div>
           <div className='group-select'>Please select a group.</div>
@@ -247,7 +250,8 @@ class Runner extends Component {
               loggedIn={true}
               postLogout={this.postLogout.bind(this)}
               postLogin={this.postLogin.bind(this)}
-              username={this.state.username} 
+              username={this.state.username}
+              karma={this.state.karma}  
               picture={this.state.picture} />
             <VolunteerRequestsContainer 
             //This also needs to be funneled info
