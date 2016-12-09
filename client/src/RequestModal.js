@@ -1,5 +1,5 @@
 import React from 'react';
-
+import getMenu from './lib/getMenu.js'
 import {
   Modal,
   ModalHeader,
@@ -10,24 +10,18 @@ import {
 } from 'react-modal-bootstrap';
 
 class RequestModal extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       isOpen: false,
       text:'',
-      menu: [
-        {
-          id: '1',
-          name: 'Chicken Burrito',
-          price: '6.95'
-        },
-        {
-          id: '2',
-          name: 'Beef Burrito',
-          price: '6.95'
-        }
-      ]
-    };
+      menu: []
+    }
+  }
+  componentDidMount() {
+    getMenu('Chipotle' , (menu) => {
+      this.setState({menu: menu})
+    })
   }
   onTextChange(event) {
     //every time the user types a new letter, the state is changed to the current input
@@ -99,7 +93,7 @@ class RequestModal extends React.Component {
                 <select onChange={this.onTextChange.bind(this)}>
                     {this.state.menu.map(item => {
                       return ( 
-                        <option value={item.name + '_' + item.price}>{item.name} - {item.price}</option>
+                        <option value={item.menuItem + '_' + item.price}>{item.menuItem} - {item.price}</option>
                       )
                     })}
                 </select>

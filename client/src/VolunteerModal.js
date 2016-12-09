@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 import {
   Modal,
   ModalHeader,
@@ -20,11 +21,13 @@ class VolunteerModal extends React.Component {
     };
   }
   componentWillMount() {
-    console.log(this.setTimeState())
+    this.setTimeState();
+
 
   }
 
   componentDidMount() {
+
     
   }
   setTimeState(time) {
