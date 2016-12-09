@@ -14,10 +14,10 @@ class NavBar extends Component {
       loggedIn: false,
       //I have not yet done anything with the karma besides hard code it as 0 and display it.
       //This needs to be worked on.
-      karma: 0
+      karma: 3
     };
   }
-  console.log("NAVBAR STATE!!!!", this.state)
+
   //Note: Navbar does not rerender when the app renders. How can we change this??
   
   //Note: All this does is toggle loggedIn back and forth so I don't have to manually change App.js's state. 
