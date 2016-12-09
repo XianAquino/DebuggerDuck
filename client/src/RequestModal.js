@@ -14,11 +14,24 @@ class RequestModal extends React.Component {
     super(props);
     this.state = {
       isOpen: false,
-      text:''
+      text:'',
+      menu: [
+        {
+          id: '1',
+          name: 'Chicken Burrito',
+          price: '6.95'
+        },
+        {
+          id: '2',
+          name: 'Beef Burrito',
+          price: '6.95'
+        }
+      ]
     };
   }
   onTextChange(event) {
     //every time the user types a new letter, the state is changed to the current input
+    console.log('Request Event', event.target.value);
     this.setState({text: event.target.value});
   }
   
@@ -70,10 +83,26 @@ class RequestModal extends React.Component {
             <div className='modal-inside'>
               <div>
                 &nbsp; What would you like? &nbsp;
+                <br />
                 <input onChange={this.onTextChange.bind(this)} 
                 className='modal-input third-input' 
                 type="text" 
                 id="text"/>
+                &nbsp; Quantity &nbsp;
+                <input 
+                  type="number"
+                  min = "0"
+                  max = "9"
+                />
+                &nbsp; MENU: &nbsp;
+                <br />
+                <select onChange={this.onTextChange.bind(this)}>
+                    {this.state.menu.map(item => {
+                      return ( 
+                        <option value={item.name + '_' + item.price}>{item.name} - {item.price}</option>
+                      )
+                    })}
+                </select>
               </div>
             </div>
             <ModalFooter>

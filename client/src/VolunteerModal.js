@@ -17,15 +17,7 @@ class VolunteerModal extends React.Component {
       time: '',
       location: '',
       restaurants: ['Chipotle', 'Jimmy Johns', 'Eureka'],
-      menus: {
-        Chipotle: [
-          {
-            id: '1',
-            name: 'Chicken Burrito',
-            price: '6.95'
-          }
-        ]
-      }
+      
     };
   }
     onTimeChange(event) {
