@@ -67,9 +67,9 @@ class VolunteerModal extends React.Component {
     this.props.getDataForRendering();
     this.setState({
       isOpen: false,
-      time: '',
-      location: '',
+      location: this.state.restaurants[0],
     });
+    this.setTimeState();
   }
 
   openModal (){
@@ -88,7 +88,6 @@ class VolunteerModal extends React.Component {
   render() {
     //Default Values:
     this.state.location = this.state.restaurants[0]
-    
     var defaultTime = this.state.time;
 
     let subModalDialogStyles = {

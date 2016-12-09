@@ -36,13 +36,25 @@ class Volunteer extends Component {
     this.props.getDataForRendering();
     this.setState({requests:this.props.volunteer.requests})
   }
+  demilitarizeTime(time) {
+    console.log(time)
+    time = time.split(':')
+    var hr = time[0]
+    var m = time[1]
+    //m = m > 30 ? m = 30 : m = 0
+    //m = m < 9 ? '0' + m : m
+    var ampm = hr < 12 ? "AM" : "PM";
+    hr = ampm === 'PM' ? hr = hr - 12 : hr = hr
+    var dateString = hr + ':' + m + ' ' + ampm
+    return dateString
+  }
 
 
   render() {
   	return ( 
         <div className='volunteer-div'>
           <img className='small-profile-pic' src={this.props.volunteer.picture}/>
-          {this.props.volunteer.order_user} is going to {this.props.volunteer.location} at {this.props.volunteer.time}.
+          {this.props.volunteer.order_user} is going to {this.props.volunteer.location} at {this.demilitarizeTime(this.props.volunteer.time)}.
         
         {this.state.requests.map(request =>
           //this goes through the array of requests and maps them using the child component, Request.js
