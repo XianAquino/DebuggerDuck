@@ -14,7 +14,6 @@ class VolunteerRequestContainer extends Component {
       username: props.username,
       picture: props.picture,
       volunteers: props.currentData,
-      karma: props.karma
     };
 
   }
