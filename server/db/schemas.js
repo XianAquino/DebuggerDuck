@@ -54,7 +54,8 @@ const OrderSchema = new Schema ({
 	group_id: String,
 	picture: String,
 	requests: [{user_id: String, picture: String, text: String}],
-	createdAt: { type : Date, default: Date.now }
+	createdAt: { type : Date, default: Date.now },
+	pending: {type:Boolean, default: true}
 })
 restaurantSchema.plugin(autoIncrement.plugin, { model: 'restaurant' });
 db.Restaurant = mongoose.model('restaurant', restaurantSchema);

@@ -138,6 +138,16 @@ app.get('/menuItem/:name',function(req,res){
     res.send(data)
   })
  })
+ //will take the ID of the volunteer box and set its status of pending to false, thus not render anymore
+  app.post('/volunteer/:id',function(req,res){
+    var id = req.params.id
+    db.Order.find({_id:id},function(err,data){
+      console.log(data[0].pending)
+      data[0].pending = false;
+      data[0].save();
+      res.send(data)
+    })
+  })
 
 
 
