@@ -119,7 +119,6 @@ class Runner extends Component {
         this.setState({picture: response.data.picture});
         this.setState({userId: response.data._id});
         this.setState({karma: response.data.groups[0].karma})
-        console.log("KARMA STATE!!!", this.state.karma)
         console.log(response.data.picture)
       })
       .catch(error =>{
