@@ -8,7 +8,6 @@ import FacebookButton from './FacebookButton.js'
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    console.log("propS!!!!!!!", props)
     
     this.state = {
       loggedIn: false,

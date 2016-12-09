@@ -206,7 +206,7 @@ class Runner extends Component {
 // (Which in turn, will render the request component(s))
 
   render() {
-    console.log("RENDER STATE!!!!!", this.state)
+   
     if (this.state.loggedIn===false){
       return (
         <div>
@@ -258,6 +258,7 @@ class Runner extends Component {
               getIdFromGroupName={this.getIdFromGroupName.bind(this)}
               username={this.state.username} 
               picture={this.state.picture}
+              karma={this.state.karma} 
               currentGroup={this.state.currentGroup}
               currentData={this.state.currentData}
               getCurrentData={this.getCurrentData.bind(this)}
