@@ -17,13 +17,44 @@ class VolunteerModal extends React.Component {
       time: '',
       location: '',
       restaurants: ['Chipotle', 'Jimmy Johns', 'Eureka'],
-      
     };
   }
-    onTimeChange(event) {
-    //every time the user types a new letter, the state is changed to the current input
-    this.setState({time: event.target.value});
+  componentWillMount() {
+    console.log(this.setTimeState())
+
   }
+
+  componentDidMount() {
+    
+  }
+  setTimeState(time) {
+    if (time) {
+      time = time.split(':')
+      var hr = time[0]
+      var m = time[1]
+
+
+    } else {
+      var d = new Date()
+      var hr = d.getHours()
+      var m = d.getMinutes()
+      m = m > 30 ? m = 30 : m = 0
+      m = m < 9 ? '0' + m : m
+      
+    }
+      //var ampm = hr < 12 ? "AM" : "PM";
+      //hr = ampm === 'PM' ? hr = hr - 12 : hr = hr
+      var dateString = hr + ':' + m
+    
+    this.setState({time: dateString})
+    return dateString
+  }
+
+  onTimeChange(event) {
+    this.setTimeState(event.target.value);
+    console.log(this.state.time)
+  }
+  
   onLocationChange(event) {
     //every time the user types a new letter, the state is changed to the current input
     this.setState({location: event.target.value});
@@ -55,6 +86,11 @@ class VolunteerModal extends React.Component {
 
 
   render() {
+    //Default Values:
+    this.state.location = this.state.restaurants[0]
+    
+    var defaultTime = this.state.time;
+
     let subModalDialogStyles = {
       base: {
         bottom: -600,
@@ -67,6 +103,7 @@ class VolunteerModal extends React.Component {
     let {isOpen, isSubOpen} = this.state;
     return (
         <div className='center'>
+          
           <button className="red-button" onClick={this.openModal.bind(this)}>
             Volunteer your services
           </button>
@@ -78,7 +115,7 @@ class VolunteerModal extends React.Component {
             </ModalHeader>
             <div className='modal-inside'>
               <div>
-                &nbsp; Where are you going?? &nbsp;
+                &nbsp; Please choose a restaurant: &nbsp;
                 <select
                 onChange={this.onLocationChange.bind(this)} 
                 className='modal-input' 
@@ -97,12 +134,14 @@ class VolunteerModal extends React.Component {
                 id="location"/> */}
               </div>
               <div>
-                &nbsp; What time? &nbsp;
+                &nbsp; Please choose the time: &nbsp;
+              </div>
+              <div>
                 <input 
                 onChange={this.onTimeChange.bind(this)} 
-                className='modal-input second-input' 
+                value={defaultTime}
                 type="time"
-                step="1800"
+                step="900"
                 id="time"/>
               </div>
             </div>
