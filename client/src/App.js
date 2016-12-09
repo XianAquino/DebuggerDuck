@@ -34,6 +34,7 @@ class Runner extends Component {
       currentGroup: '',
       userId: '',
       groups:[],
+      karma: 0,
       //currentData holds all volunteers and requests.
       currentData:[],
 
@@ -113,9 +114,11 @@ class Runner extends Component {
     axios.get('/api/user')
       .then(response => {
         console.log('User info sucessfully retrieved', response);
+        console.log("karma", response.data.groups[0].karma)
         this.setState({username: response.data.username});
         this.setState({picture: response.data.picture});
-        this.setState({userId: response.data._id})
+        this.setState({userId: response.data._id});
+        this.setState({karma: response.data.groups[0].karma})
         console.log(response.data.picture)
       })
       .catch(error =>{
@@ -202,6 +205,7 @@ class Runner extends Component {
 // (Which in turn, will render the request component(s))
 
   render() {
+   
     if (this.state.loggedIn===false){
       return (
         <div>
@@ -218,7 +222,8 @@ class Runner extends Component {
           loggedIn={true}
           postLogout={this.postLogout.bind(this)}
           postLogin={this.postLogin.bind(this)}
-          username={this.state.username} 
+          username={this.state.username}
+          karma={this.state.karma}   
           picture={this.state.picture}/>
           <div className='greeting'> Hi, {this.state.username}.</div>
           <div className='group-select'>Please select a group.</div>
@@ -244,13 +249,15 @@ class Runner extends Component {
               loggedIn={true}
               postLogout={this.postLogout.bind(this)}
               postLogin={this.postLogin.bind(this)}
-              username={this.state.username} 
+              username={this.state.username}
+              karma={this.state.karma}  
               picture={this.state.picture} />
             <VolunteerRequestsContainer 
             //This also needs to be funneled info
               getIdFromGroupName={this.getIdFromGroupName.bind(this)}
               username={this.state.username} 
               picture={this.state.picture}
+              karma={this.state.karma} 
               currentGroup={this.state.currentGroup}
               currentData={this.state.currentData}
               getCurrentData={this.getCurrentData.bind(this)}
