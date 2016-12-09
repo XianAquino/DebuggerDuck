@@ -51,7 +51,9 @@ class VolunteerRequestContainer extends Component {
             postVolunteer={this.props.postVolunteer} />
 
         </div>
-        {this.state.volunteers.filter(volunteer => volunteer.group_id === this.props.getIdFromGroupName(this.props.currentGroup))
+        {//filter out by group ID and if the pending status is still true.
+        }
+        {this.state.volunteers.filter(volunteer => (volunteer.group_id === this.props.getIdFromGroupName(this.props.currentGroup))&& (volunteer.pending===true))
           .map(volunteer =>
             //Render one Volunteer component for each current volunteer in a given group.
             <Volunteer 

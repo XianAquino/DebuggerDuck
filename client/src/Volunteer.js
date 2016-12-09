@@ -1,10 +1,10 @@
 //This component is the child component of volunteerRequestContainer.js and the parent of request.js
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-
+import getTimer from './lib/getTimer.js'
 import Request from './Request.js';
 import RequestModal from './RequestModal.js';
-
+import changePending from './lib/changePending'
 class Volunteer extends Component {
   constructor(props) {
     super(props);
@@ -18,12 +18,17 @@ class Volunteer extends Component {
       //requests is an array of stuff obtained from the database. 
       //It can be added to by the user by typing into the inputs and submitting.
       requests:this.props.volunteer.requests,
-      count:0
+      count:0,
+      pending: true
     };
   }
   onTextChange(event) {
     //every time the user types a new letter, the state is changed to the current input
     this.setState({text: event.target.value});
+  }
+  removeMe() {
+    changePending(this.props.volunteer._id)
+    this.setState({pending:false})
   }
   //Run postRequest to send request data to the server.
   //update text state to reset box.
@@ -36,6 +41,7 @@ class Volunteer extends Component {
     this.props.getDataForRendering();
     this.setState({requests:this.props.volunteer.requests})
   }
+
   demilitarizeTime(time) {
     console.log(time)
     time = time.split(':')
@@ -48,10 +54,19 @@ class Volunteer extends Component {
     var dateString = hr + ':' + m + ' ' + ampm
     return dateString
   }
+  componentDidMount(){
+    //on each volunteer item we'll check if its expired or not by calling getTimer
+    var difference =  getTimer(this.props.volunteer.time)
+    //if getTimer returns a negative number, we'll send a post request through changePending to update its pending status to false
+    difference > 0 ? null : this.removeMe() 
+
+  }
 
 
   render() {
-  	return ( 
+  	
+      if (this.state.pending){
+        return ( 
         <div className='volunteer-div'>
           <img className='small-profile-pic' src={this.props.volunteer.picture}/>
           {this.props.volunteer.order_user} is going to {this.props.volunteer.location} at {this.demilitarizeTime(this.props.volunteer.time)}.
@@ -65,7 +80,11 @@ class Volunteer extends Component {
           )}
            <RequestModal onSubmit={this.onSubmit.bind(this)}/>
         </div>
-  );
+      )} else{
+          return(<div></div>)
+        }
+    
+        
  }
  
 };
