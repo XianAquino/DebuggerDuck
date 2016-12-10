@@ -11,8 +11,10 @@ const socket = io();
 import Volunteer from './Volunteer';
 import VolunteerModal from './VolunteerModal'
 
+
 //This is a child component of app.js and the parent of volunteer.js (and therefore a grandparent(?) of request.js)
 var  VolunteerRequestContainer = (props)=>  {
+
 
     //Because this.state.volunteers holds ALL the info for all groups and we only want to render the info relevent to the group,
     //We create a variable called filteredVolunteers. Because the database needs the id of the group but we only hold
