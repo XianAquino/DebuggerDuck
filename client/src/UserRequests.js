@@ -3,9 +3,10 @@ import UserRequest from './UserRequest';
 
 
 const UserRequests = (props) => {
+  var size = props.requests.length
   return (
     <div className='user-requests'>
-      <h2>Requests</h2>
+      <h2>Requests: { size ? size : 0 }</h2>
       <ul>
         {
           props.requests.map( request =>

@@ -2,9 +2,10 @@ import React from 'react';
 import UserVolunteer from './UserVolunteer.js'
 
 const UserVolunteers = (props) => {
+  var size = props.volunteers.length
   return(
     <div className = 'user-volunteer-list'>
-      <h2>Volunteers</h2>
+      <h2>Volunteers: { size ? size : 0 }</h2>
       <ul>
         {
           props.volunteers.map( (volunteer) =>

@@ -41,7 +41,8 @@ class UserProfile extends React.Component {
 
   render(){
 
-    var size = 300;
+    let size = 300;
+    let data = this.state.chartData
     console.log(this.state.chartData,"    data");
     return (
       <div className = 'user-profile'>
@@ -51,14 +52,15 @@ class UserProfile extends React.Component {
         <div className = 'user-history'>
           {
             this.state.volunteers === undefined ? null :
-            <UserVolunteers volunteers = {this.state.volunteers}/>
+            <UserVolunteers volunteers = {this.state.volunteers} />
           }
           {
             this.state.requests === undefined ? null :
-            <UserRequests requests = {this.state.requests}/>
+            <UserRequests requests = {this.state.requests} />
           }
           {
-            this.state.chartData === undefined ? null :
+            //don't display the pie chart if data is undefine or both requests and volunteers are empty
+            data === undefined || (data[0].value===0&&data[1].value===0) ? null :
             <svg width={size} height= {size}>
               <g transform={`translate(${size/2}, ${size/2})`}>
                 <PieChart data={this.state.chartData} size={size}/>
