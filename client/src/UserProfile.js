@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import UserVolunteers from './UserVolunteers'
 
 class UserProfile extends React.Component {
   constructor(props){
@@ -37,7 +38,10 @@ class UserProfile extends React.Component {
         <p onClick={()=>this.props.hideUserProfile()}>x</p>
         <img src = {this.props.picture} />
         <p>{this.props.username}</p>
-
+        <div className = 'user-history'>
+          <h2>Volunteers</h2>
+          <UserVolunteers volunteers = {this.state.volunteers}/>
+        </div>
       </div>
     )
   }
