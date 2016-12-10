@@ -32,21 +32,21 @@ class Volunteer extends Component {
     this.setState({pending:false})
   }
 
-  onSubmit(text){
-    this.postRequest(text);
+  onSubmit(text, price){
+    this.postRequest(text, price);
     //  this.setState({text:''});
     //this.setState({requests:this.props.volunteer.requests})
   }
 
-  postRequest(text){
+  postRequest(text, price){
     axios.post('/api/request',
       {data:
         {
-        username: this.props.username,
-        volunteerId: this.props.volunteer._id,
-        picture: this.props.picture,
-        text: text,
-        price: 0.00
+            username: this.props.username,
+            volunteerId: this.props.volunteer._id,
+            picture: this.props.picture,
+            text: text,
+            price: price || 0
         }
       }
     )
