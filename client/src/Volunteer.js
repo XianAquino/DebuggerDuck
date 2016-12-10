@@ -19,7 +19,7 @@ class Volunteer extends Component {
     console.log("Volunteer Props location: ", this.props.volunteer.location)
     this.state = {
       pending: true,
-      requests:undefined,
+      requests: [],
       count:0
     };
   }
@@ -110,27 +110,40 @@ class Volunteer extends Component {
   render() {
     var requests = this.state.requests
     var key = Math.random()
-    if (this.state.pending){
-    	return (
+    if (this.state.pending) {
+      if (requests.length) {
+        return (
           <div className='volunteer-div'>
           <img className='small-profile-pic' src={this.props.volunteer.picture}/>
           {this.props.volunteer.order_user} is going to {this.props.volunteer.location} at {this.demilitarizeTime(this.props.volunteer.time)}
-
           {
-            requests=== undefined ? null :
             requests.map(request =>
               <Request
               //I threw math.random as the key because react kept getting angry at me for making duplicate keys??
                 key= {Math.random()}
                 request={request}/>
             )
-          } {
-            //we pass in the location so we send a GET request to get the menu for that location later down the line
+          }
+          { 
+          "The Grand Total is: $" +
+          requests.reduce((a,x) => {
+            a += x.price
+            return a
+          }, 0).toFixed(2)
           }
           <RequestModal onSubmit={this.onSubmit.bind(this)} location={this.props.volunteer.location}/>
           </div>
-      )
-    } else{
+        )
+      } else {
+        return (
+          <div className='volunteer-div'>
+          <img className='small-profile-pic' src={this.props.volunteer.picture}/>
+          {this.props.volunteer.order_user} is going to {this.props.volunteer.location} at {this.demilitarizeTime(this.props.volunteer.time)}
+          <RequestModal onSubmit={this.onSubmit.bind(this)} location={this.props.volunteer.location}/>
+          </div>
+        )
+      }
+    } else {
       return(<div></div>)
     }
   }
