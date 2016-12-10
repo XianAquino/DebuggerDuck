@@ -15,7 +15,7 @@ module.exports = {
   },
 
   volunteers : () => {
-    return db.Order.find({});
+    return db.Order.find({pending:true});
   },
 
   requests : (id) => {
