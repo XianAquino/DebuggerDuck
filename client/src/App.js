@@ -126,11 +126,11 @@ class Runner extends Component {
     axios.get('/api/user')
       .then(response => {
         console.log('User info sucessfully retrieved', response);
-        console.log("karma", response.data.groups[0].karma)
+        console.log("karma", response.data.karma)
         this.setState({username: response.data.username});
         this.setState({picture: response.data.picture});
         this.setState({userId: response.data._id});
-        this.setState({karma: response.data.groups[0].karma})
+        this.setState({karma: response.data.karma})
         console.log(response.data.picture)
       })
       .catch(error =>{
