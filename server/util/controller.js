@@ -134,7 +134,6 @@ module.exports = {
     // Request controller functions for POST
     //Data is posted in req.body
     post: (req, res) => {
-
       db.Order.findOneAndUpdate(
          {_id:req.body.data.volunteerId},
          {$push: { requests:{user_id: req.body.data.username, picture: req.body.data.picture, text:req.body.data.text, price:req.body.data.price} } }

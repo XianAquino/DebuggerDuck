@@ -8,7 +8,6 @@ import FacebookButton from './FacebookButton.js'
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    
     this.state = {
       loggedIn: false,
       //I have not yet done anything with the karma besides hard code it as 0 and display it.

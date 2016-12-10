@@ -169,7 +169,7 @@ class Runner extends Component {
     //Accepts a location, a time, and group.  Pulls username from state.
   postVolunteer(location, time, group) {
     axios.post('/api/volunteer', {data:{
-      username: this.state.username,
+      username: this.state.username, 
       location: location,
       time:  time,
       picture: this.state.picture,
@@ -263,6 +263,7 @@ class Runner extends Component {
               postLogout={this.postLogout.bind(this)}
               postLogin={this.postLogin.bind(this)}
               username={this.state.username}
+              karma={this.state.karma}
               picture={this.state.picture} />
               {console.log("currrrrennnntttt datta sdfsdflksfj",this.state.currentData)}
             <VolunteerRequestsContainer
