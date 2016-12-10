@@ -15,6 +15,7 @@ class RequestModal extends React.Component {
     this.state = {
       isOpen: false,
       text:'',
+      price: null,
       menu: []
     }
   }
@@ -26,14 +27,17 @@ class RequestModal extends React.Component {
   }
   onTextChange(event) {
     //every time the user types a new letter, the state is changed to the current input
-    console.log('Request Event', event.target.value);
-    this.setState({text: event.target.value});
+    var value = event.target.value.split('__')
+    var text = value[0]
+    var price = value[1]
+    console.log('Request Event', text, price);
+    this.setState({text: text, price: price});
   }
 
   onSubmit () {
     //Don't change this invocation.
     console.log('modal text?', this.state.text);
-    this.props.onSubmit(this.state.text);
+    this.props.onSubmit(this.state.text, this.state.price);
     this.hideModal();
     this.setState({
       isOpen: false,
@@ -97,7 +101,7 @@ class RequestModal extends React.Component {
                 <select onChange={this.onTextChange.bind(this)}>
                     {this.state.menu.map(item => {
                       return (
-                        <option value={item.menuItem + '_' + item.price}>{item.menuItem} - {item.price}</option>
+                        <option value={item.menuItem + '__' + item.price}>{item.menuItem} - {item.price}</option>
                       )
                     })}
                 </select>
