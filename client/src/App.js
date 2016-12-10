@@ -21,6 +21,7 @@ import LandingPage from './LandingPage.js';
 import Groups from './Groups.js';
 import VolunteerRequestsContainer from './VolunteerRequestsContainer.js';
 import GroupModal from './GroupModal';
+import saveRestaurant from './lib/saveRestaurant';
 
 const socket = io();
 
@@ -169,7 +170,7 @@ class Runner extends Component {
     //Accepts a location, a time, and group.  Pulls username from state.
   postVolunteer(location, time, group) {
     axios.post('/api/volunteer', {data:{
-      username: this.state.username,
+      username: this.state.username, //verify that this is passed serverside
       location: location,
       time:  time,
       picture: this.state.picture,
