@@ -19,7 +19,8 @@ class RequestModal extends React.Component {
     }
   }
   componentDidMount() {
-    getMenu('Chipotle' , (menu) => {
+    //this will call getMenu on the location we're at in the volunteer Modal
+    getMenu(this.props.location, (menu) => {
       this.setState({menu: menu})
     })
   }

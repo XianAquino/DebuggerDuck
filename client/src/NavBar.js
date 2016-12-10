@@ -42,6 +42,9 @@ class NavBar extends Component {
     		<div className='karma'>Karma: {this.props.karma}</div>
         <img className='nav-pic' src={this.props.picture}/>
         <div className='username'>{this.props.username} </div>
+        {//added a contact us button, this will open the user's email in another tab and supply the mailto: address in the To: field"
+        }
+        <a href="mailto:someone@somewhere.com" target="_blank">Want us to add something?</a>
     	</div>
   		);
   	}

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import getAllRestaurants from './lib/getAllRestaurants.js'
 
 import {
   Modal,
@@ -17,12 +17,14 @@ class VolunteerModal extends React.Component {
       isOpen: false,
       time: '',
       location: '',
-      restaurants: ['Chipotle', 'Jimmy Johns', 'Eureka'],
+      restaurants: []
     };
   }
   componentWillMount() {
     this.setTimeState();
-
+    getAllRestaurants((restaurant)=>{
+      this.setState({restaurants:restaurant.data})
+    })
 
   }
 
@@ -62,6 +64,8 @@ class VolunteerModal extends React.Component {
   onSubmit (){
     this.props.postVolunteer(this.state.location, this.state.time, this.props.currentGroup);
     console.log("On submit at the modal level")
+    //resets the option wheel to the greyed out option so people don't just choose the first thing aka Chipotle
+    document.getElementById("location").selectedIndex = -1;
     this.hideModal();
     this.setState({
       isOpen: false,
@@ -85,9 +89,9 @@ class VolunteerModal extends React.Component {
 
   render() {
     //Default Values:
-    this.state.location = this.state.restaurants[0]
+    //this.state.location = this.state.restaurants[0]
     var defaultTime = this.state.time;
-
+    var restaurants = this.state.restaurants
     let subModalDialogStyles = {
       base: {
         bottom: -600,
@@ -118,7 +122,8 @@ class VolunteerModal extends React.Component {
                 className='modal-input'
                 type="text"
                 id="location">
-                {this.state.restaurants.map(restaurant => {
+                <option disabled selected value> -- select a restaurant -- </option>
+                {restaurants.map(restaurant => {
                   return (
                     <option value={restaurant}>{restaurant}</option>
                   )

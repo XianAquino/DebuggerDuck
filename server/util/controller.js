@@ -15,7 +15,8 @@ module.exports = {
   },
 
   volunteers : () => {
-    return db.Order.find({});
+    //we only get back what isn't expired, so we load and pick through less data
+    return db.Order.find({pending:true});
   },
 
   requests : (id) => {
