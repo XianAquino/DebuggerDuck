@@ -27,6 +27,7 @@ router.post('/volunteer', controller.volunteer.post);
 
 // Use the router to direct POST requests for /request
 router.post('/request', controller.request.post);
+router.get('/request/:group_id', controller.request.get)
 
 // User the router to direct GET requests for /logout
 router.get('/logout', controller.logout.get);

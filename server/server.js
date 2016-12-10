@@ -13,6 +13,10 @@ const Strategy = require('passport-facebook').Strategy;
 const app = express();
 module.exports.app = app;
 
+const controller = require('./util/controller.js');
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
 // Check to see if there is a port environment variable or just use port 4040 instead
 module.exports.NODEPORT =  4040;
 
@@ -78,6 +82,7 @@ app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true 
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 // Serve the static client HTML files
 app.use(express.static(path.join(__dirname, '/../client/public')));
 // Serve the static client React files
@@ -102,7 +107,7 @@ app.get('/restaurants',function(req,res){
       allRestaurants[restaurant.id] = restaurant.name;
     });
 
-    res.send(allRestaurants);  
+    res.send(allRestaurants);
   });
 })
 //will add a new restaurant to our database when provided a name
@@ -155,10 +160,86 @@ app.get('/menuItem/:name',function(req,res){
 // what happens with the requests
 app.use('/api', router);
 
-// Start the actual server listening on the port variable
-app.listen(module.exports.NODEPORT, function (err) {
-  // If there is an error log it
-  if (err) { console.error(err); }
-  // If there is not an error console log what port the server is running on
-  else { console.log('Server running on port %s', module.exports.NODEPORT) }
-})
+
+
+io.on('connection', function(socket){
+  console.log('a user connected');
+
+
+//Listens when a user added a group
+  socket.on('groups',function(){
+    controller.groups()
+    .then(groups => {
+      io.emit('groupsAdded',groups)
+    })
+  })
+//Listens when a user added a volunteer container
+  socket.on('volunteer', function(){
+    controller.volunteers()
+    .then(volunteers => {
+      io.emit("volunteerAdded", volunteers)
+    })
+  })
+
+//Listens when a user sends a request
+  socket.on('request', function(data){
+    console.log("sockets id",data.id);
+    controller.requests(data.id)
+      .then(requests => {
+        console.log("passs requessst!!!",requests)
+        io.emit("requestAdded", requests)
+      })
+
+
+    // console.log(data);
+    // controller.newRequest(data)
+    // .then((data) => {
+    //   console.log("save data",data)
+    //   io.emit('requestAdded', data);
+    // })
+    // .then(request => {
+    //   console.log(request,"request",request._id);
+    // });
+    //console.log("request sockets" ,id);
+    // controller.requests(id)
+    // .then(requests => {
+    //   socket.emit("requestAdded", requests)
+    // })
+    // .catch(err => {
+    //   console.log("Error", err);
+    // })
+  // var id;
+  //   socket.on('request', function(data){
+  //     id = data.id;
+  //   })
+  //   controller.requests(id)
+  //   .then(requests => {
+  //     console.log("passs requessst!!!",requests)
+  //     socket.emit("requestAdded", requests)
+  //   })
+  //   .catch(err => {
+  //     console.log("Error", err);
+  //   })
+  })
+
+
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+
+});
+
+http.listen(4040, function(){
+  console.log('listening on *:4040');
+});
+
+
+
+//
+// // Start the actual server listening on the port variable
+// app.listen(module.exports.NODEPORT, function (err) {
+//   // If there is an error log it
+//   if (err) { console.error(err); }
+//   // If there is not an error console log what port the server is running on
+//   else { console.log('Server running on port %s', module.exports.NODEPORT) }
+// })

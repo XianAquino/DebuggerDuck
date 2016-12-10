@@ -10,14 +10,14 @@ class Request extends Component {
   }
 
   render() {
-    return ( 
+    return (
       <div className='individual-request'>
       {this.props.request.text} - {this.props.request.user_id}
      <img className='small-profile-pic' src={this.props.request.picture}/>
      </div>
     );
-  }  
-  
+  }
+
 };
 
 export default Request;

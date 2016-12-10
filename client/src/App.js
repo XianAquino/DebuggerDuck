@@ -1,4 +1,4 @@
-//App.js is the top component. It stores all the main data within its state. 
+//App.js is the top component. It stores all the main data within its state.
 //It renders 3 different views based on its state (described in detail below).
 //It funnels down user data into its child components.
 //The hierarchy is described below.
@@ -14,13 +14,15 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-
+import io from 'socket.io-client'
 
 import NavBar from './NavBar';
 import LandingPage from './LandingPage.js';
 import Groups from './Groups.js';
 import VolunteerRequestsContainer from './VolunteerRequestsContainer.js';
 import GroupModal from './GroupModal';
+
+const socket = io();
 
 //Primary component for App.
 class Runner extends Component {
@@ -70,7 +72,7 @@ class Runner extends Component {
   selectDifferentGroup(){
     this.setState({currentGroup:''});
     //this rerenders the app to go back to option 2 (mentioned above)
-  }  
+  }
 
 //Adds a new group to DB.
   postGroup(groupName){
@@ -78,6 +80,8 @@ class Runner extends Component {
     axios.post('/api/group', {data:{"groupName":groupName}})
       .then( response =>{
         this.getGroups();
+        socket.emit('groups');
+
       })
        .catch(error => {
         console.log('Error while getting groups: ', error);
@@ -89,7 +93,11 @@ class Runner extends Component {
     axios.get('/api/group')
       .then( response => {
         this.setState( {groups:response.data.data} );
-        console.log('Group State?',this.state.groups);
+        //console.log('Group State?',this.state.groups);
+
+        socket.on('groupsAdded',(groups) => {
+          this.setState( {groups:groups} );
+        })
     })
       .catch(error => {
         console.log('Error while getting groups: ', error);
@@ -99,10 +107,14 @@ class Runner extends Component {
   // //Gets all volunteers for today, and all associated requests.
   //   //updates currentData in state, which is then passed to VolunteerRequest Container.
   getCurrentData() {
-    axios.get('/api/volunteer')
+    axios.get('/api/volunteer/')
       .then(response => {
         console.log('Getting Current Data?', response.data.data);
         this.setState({currentData: response.data.data});
+        socket.on('volunteerAdded', (volunteers) => {
+          console.log("volunteersre get", volunteers);
+          this.setState({currentData: volunteers});
+        });
       })
       .catch(error => {
         console.log('Error while getting current data: ', error);
@@ -167,7 +179,7 @@ class Runner extends Component {
     .then(response => {
       console.log('Volunteer posted! ',response);
       this.getCurrentData();
-      this.render();
+      socket.emit('volunteer')//sends a socket request on the server
     })
     .catch(error => {
       console.log('Error while posting Volunteer: ',error);
@@ -178,26 +190,26 @@ class Runner extends Component {
   // volunteerId is the mongo db record for the volunteer (in the mongo Order table.)
     //text is what the user requested.
     //username for hte request is pulled from state.
-    
+
   postRequest(volunteerId, text) {
       axios.post('/api/request', {data:{
-      //don't remove.  
+      //don't remove.
       username: this.state.username,
       volunteerId: volunteerId,
-      picture: this.state.picture, 
+      picture: this.state.picture,
       text: text,
-
       }
     })
       .then(response => {
         console.log('Request submitted: ', response.data);
+        socket.emit('request');
       })
       .catch(error => {
         console.log('Error while submitting food request:', error);
       })
   }
 
-  //There are three possible options when we reach the home page. 
+  //There are three possible options when we reach the home page.
 //For each option a navbar is rendered regardless of state.
 //1. LoggedIn is false -> render the Landing page component.
 //2. LoggedIn is true but group chosen is false -> render the groups component.
@@ -205,7 +217,7 @@ class Runner extends Component {
 // (Which in turn, will render the request component(s))
 
   render() {
-   
+
     if (this.state.loggedIn===false){
       return (
         <div>
@@ -217,50 +229,50 @@ class Runner extends Component {
       if (this.state.currentGroup===''){
         return (
           <div>
-          <NavBar 
+          <NavBar
           //Funnel down info into the navbar
           loggedIn={true}
           postLogout={this.postLogout.bind(this)}
           postLogin={this.postLogin.bind(this)}
           username={this.state.username}
-          karma={this.state.karma}   
+          karma={this.state.karma}
           picture={this.state.picture}/>
           <div className='greeting'> Hi, {this.state.username}.</div>
-          <div className='group-select'>Please select a group.</div>
+          <div className='group-select'>Please select a group.!!</div>
             {this.state.groups.map(group =>
-              //This maps out all the groups into a list. 
-              <Groups 
+              //This maps out all the groups into a list.
+              <Groups
               //If I don't put a key in, react gets angry with me.
               selectGroup={this.selectGroup.bind(this)}
               key={Math.random()}
               group={group.name} />
             )}
-            <div className='center'>  
+
+            <div className='center'>
               <GroupModal postGroup={this.postGroup.bind(this)}/>
             </div>
           </div>
           )
       } else {
-        return ( 
+        return (
           <div>
-            <NavBar 
+            <NavBar
             //Again, funneling info to the navbar.
               //Also passing in login and logout functions.
               loggedIn={true}
               postLogout={this.postLogout.bind(this)}
               postLogin={this.postLogin.bind(this)}
               username={this.state.username}
-              karma={this.state.karma}  
               picture={this.state.picture} />
-            <VolunteerRequestsContainer 
+              {console.log("currrrrennnntttt datta sdfsdflksfj",this.state.currentData)}
+            <VolunteerRequestsContainer
             //This also needs to be funneled info
               getIdFromGroupName={this.getIdFromGroupName.bind(this)}
-              username={this.state.username} 
+              username={this.state.username}
               picture={this.state.picture}
-              karma={this.state.karma} 
+              karma={this.state.karma}
               currentGroup={this.state.currentGroup}
               currentData={this.state.currentData}
-              getCurrentData={this.getCurrentData.bind(this)}
               postVolunteer={this.postVolunteer.bind(this)}
               postRequest={this.postRequest.bind(this)}
               getCurrentData={this.getCurrentData.bind(this)}
@@ -269,8 +281,8 @@ class Runner extends Component {
           </div>
           )
         }
-    }  
-  }   
+    }
+  }
 };
 
 
