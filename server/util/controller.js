@@ -62,11 +62,11 @@ module.exports = {
     },
     requests: (req,res) => {
       var user = req.params.user_name;
-      db.Order.find({}).exec()
+      db.Order.find().exec()
       .then(function(data){
         var requests = [];
         data.forEach(function(volunteers){
-          var userRequests = volunteers.requests.filter((request)=> request.user_id=user);
+          var userRequests = volunteers.requests.filter((request)=> request.user_id===user);
           requests = requests.concat(userRequests);
         })
         res.send(requests);
