@@ -52,7 +52,27 @@ module.exports = {
     logout: (req, res) => {
       req.session.destroy();
       res.redirect('/');
+    },
+    volunteers:(req, res) => {
+      var user = req.params.user_name;
+      db.Order.find({order_user:user}).exec()
+      .then(function(data){
+        res.send(data);
+      })
+    },
+    requests: (req,res) => {
+      var user = req.params.user_name;
+      db.Order.find().exec()
+      .then(function(data){
+        var requests = [];
+        data.forEach(function(volunteers){
+          var userRequests = volunteers.requests.filter((request)=> request.user_id===user);
+          requests = requests.concat(userRequests);
+        })
+        res.send(requests);
+      })
     }
+
   },
 
   group: {
