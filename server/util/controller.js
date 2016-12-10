@@ -114,6 +114,24 @@ module.exports = {
     post: (req, res) => {
       //add functionality here to update karma
       console.log("request body!!!!!", req.body.data)
+
+      db.User.findOne({karma: 0}, function (err, user) {
+        if (err) {
+          console.log("error 120!!!", error)
+        } else {
+          console.log("user 122!!!!", user)
+        }
+      })
+
+      // db.User.findOneAndUpdate({username: req.body.data.username}, {groups[0].karma: 4}, {upsert: false})
+      // .then((data) => {
+      //   console.log("db data!!!!", data) //we want data.order_user
+       
+      // })
+      // .catch((err) => {
+      //   console.log(err)
+      // })
+
       new db.Order({
         order_user: req.body.data.username,
         location: req.body.data.location,
@@ -124,14 +142,7 @@ module.exports = {
       }).save()
       .then((data) => {
         console.log("data!!!!", data) //we want data.order_user
-        user.findOneAndUpdate({username: data.order_user}, {karma: 4}, {upsert: false}, function (err, data) {
-          if (err) {
-            return res.send(500, { error: err });
-          } else{
-          res.status(201).send(data);
-        }
-        })
-        //res.status(201).send(data);
+        res.status(201).send(data);
       })
       .catch((err) => {
         console.log(err)
@@ -144,6 +155,7 @@ module.exports = {
     // Request controller functions for POST
     //Data is posted in req.body
     post: (req, res) => {
+      console.log("request body!!!!!!", req.body)
       db.Order.findOneAndUpdate(
          {_id:req.body.data.volunteerId},
          {$push: { requests:{user_id: req.body.data.username, picture: req.body.data.picture, text:req.body.data.text, price:req.body.data.price} } }
