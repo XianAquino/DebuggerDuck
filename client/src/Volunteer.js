@@ -16,7 +16,7 @@ import changePending from './lib/changePending'
 class Volunteer extends Component {
   constructor(props) {
     super(props);
-    console.log("Volunteer Props: ", this.props.volunteer.requests)
+    console.log("Volunteer Props location: ", this.props.volunteer.location)
     this.state = {
       pending: true,
       requests:undefined,
@@ -124,7 +124,7 @@ class Volunteer extends Component {
                 request={request}/>
             )
           }
-          <RequestModal onSubmit={this.onSubmit.bind(this)}/>
+          <RequestModal onSubmit={this.onSubmit.bind(this)} location={this.props.volunteer.location}/>
           </div>
       )
     } else{
