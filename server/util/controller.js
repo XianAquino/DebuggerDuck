@@ -9,6 +9,7 @@ const buildResObj = function (data) {
 }
 
 module.exports = {
+  //for socket connection--------------
   groups : () => {
     return db.Group.find({});
   },
@@ -27,9 +28,8 @@ module.exports = {
        {_id:request.volunteerId},
        {$push: { requests:{user_id: request.username, picture: request.picture, text:request.text} } }
       )
-
   },
-
+  //----------------socket connection
   user: {
     get: (req, res) => {
       db.User.findOne({fb_id: req.user.id}).exec()

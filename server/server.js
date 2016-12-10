@@ -165,13 +165,15 @@ app.use('/api', router);
 io.on('connection', function(socket){
   console.log('a user connected');
 
+
+//Listens when a user added a group
   socket.on('groups',function(){
     controller.groups()
     .then(groups => {
       io.emit('groupsAdded',groups)
     })
   })
-
+//Listens when a user added a volunteer container
   socket.on('volunteer', function(){
     controller.volunteers()
     .then(volunteers => {
@@ -179,7 +181,7 @@ io.on('connection', function(socket){
     })
   })
 
-
+//Listens when a user sends a request
   socket.on('request', function(data){
     console.log("sockets id",data.id);
     controller.requests(data.id)

@@ -179,8 +179,7 @@ class Runner extends Component {
     .then(response => {
       console.log('Volunteer posted! ',response);
       this.getCurrentData();
-      //this.render();
-      socket.emit('volunteer')
+      socket.emit('volunteer')//sends a socket request on the server
     })
     .catch(error => {
       console.log('Error while posting Volunteer: ',error);
