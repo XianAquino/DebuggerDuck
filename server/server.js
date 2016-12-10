@@ -166,18 +166,60 @@ io.on('connection', function(socket){
   console.log('a user connected');
 
   socket.on('groups',function(){
-    console.log("groups pass" );
     controller.groups()
     .then(groups => {
-      console.log("ppass promise", groups);
       io.emit('groupsAdded',groups)
     })
   })
 
-  socket.on('request', function(){
-    console.log("request pass");
-    controller.groups
+  socket.on('volunteer', function(){
+    controller.volunteers()
+    .then(volunteers => {
+      io.emit("volunteerAdded", volunteers)
+    })
   })
+
+
+  socket.on('request', function(data){
+    console.log("sockets id",data.id);
+    controller.requests(data.id)
+      .then(requests => {
+        console.log("passs requessst!!!",requests)
+        io.emit("requestAdded", requests)
+      })
+
+
+    // console.log(data);
+    // controller.newRequest(data)
+    // .then((data) => {
+    //   console.log("save data",data)
+    //   io.emit('requestAdded', data);
+    // })
+    // .then(request => {
+    //   console.log(request,"request",request._id);
+    // });
+    //console.log("request sockets" ,id);
+    // controller.requests(id)
+    // .then(requests => {
+    //   socket.emit("requestAdded", requests)
+    // })
+    // .catch(err => {
+    //   console.log("Error", err);
+    // })
+  // var id;
+  //   socket.on('request', function(data){
+  //     id = data.id;
+  //   })
+  //   controller.requests(id)
+  //   .then(requests => {
+  //     console.log("passs requessst!!!",requests)
+  //     socket.emit("requestAdded", requests)
+  //   })
+  //   .catch(err => {
+  //     console.log("Error", err);
+  //   })
+  })
+
 
   socket.on('disconnect', function(){
     console.log('user disconnected');
@@ -186,7 +228,7 @@ io.on('connection', function(socket){
 });
 
 http.listen(4040, function(){
-  console.log('listening on *:3000');
+  console.log('listening on *:4040');
 });
 
 

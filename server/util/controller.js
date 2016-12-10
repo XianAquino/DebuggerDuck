@@ -1,4 +1,5 @@
 const db = require('../db/schemas.js');
+var ObjectId = require('mongodb').ObjectID;
 
 // Returns an object with a key of data
 const buildResObj = function (data) {
@@ -10,6 +11,23 @@ const buildResObj = function (data) {
 module.exports = {
   groups : () => {
     return db.Group.find({});
+  },
+
+  volunteers : () => {
+    return db.Order.find({});
+  },
+
+  requests : (id) => {
+    return db.Order.find({'_id':ObjectId(id)});
+  },
+
+  newRequest : (request) => {
+    console.log("requestttttttttttttt database ",request);
+    return db.Order.findOneAndUpdate(
+       {_id:request.volunteerId},
+       {$push: { requests:{user_id: request.username, picture: request.picture, text:request.text} } }
+      )
+
   },
 
   user: {
@@ -129,6 +147,19 @@ module.exports = {
       })
       //console.log('Request POST', req);
 
+   },
+
+   get : (req, res) => {
+     var id = req.params.group_id;
+     console.log("id",req.params);
+     db.Order.find({'_id':ObjectId(id)})
+     .then((data) => {
+       console.log("passs");
+       console.log("sdf",data);
+       res.status(201).send(data);
+     }).catch((err) => {
+       res.sendStatus(400);
+     })
    }
 },
 

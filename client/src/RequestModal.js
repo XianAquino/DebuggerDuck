@@ -28,11 +28,12 @@ class RequestModal extends React.Component {
     console.log('Request Event', event.target.value);
     this.setState({text: event.target.value});
   }
-  
+
   onSubmit (){
     //Don't change this invocation.
     console.log('modal text?', this.state.text);
     this.props.onSubmit(this.state.text);
+    this.hideModal();
     this.setState({
       isOpen: false,
       text: ''
@@ -65,25 +66,27 @@ class RequestModal extends React.Component {
     let {isOpen, isSubOpen} = this.state;
     return (
         <div className='center orange'>
-          <button className="red-button" onClick={this.openModal.bind(this)}>
+          <button className="red-button" onClick={() => this.openModal()}>
             Make a request
           </button>
 
           <Modal isOpen={isOpen} onRequestHide={this.hideModal.bind(this)}>
             <ModalHeader >
-              <ModalClose onClick={this.hideModal.bind(this)}/>
-              
+              <ModalClose onClick={()=>this.hideModal()}/>
+
             </ModalHeader>
             <div className='modal-inside'>
               <div>
                 &nbsp; What would you like? &nbsp;
+
                 <br />
-                <input onChange={this.onTextChange.bind(this)} 
-                className='modal-input third-input' 
-                type="text" 
+                <input onChange={this.onTextChange.bind(this)}
+                className='modal-input third-input'
+                type="text"
+
                 id="text"/>
                 &nbsp; Quantity &nbsp;
-                <input 
+                <input
                   type="number"
                   min = "0"
                   max = "9"
@@ -92,7 +95,7 @@ class RequestModal extends React.Component {
                 <br />
                 <select onChange={this.onTextChange.bind(this)}>
                     {this.state.menu.map(item => {
-                      return ( 
+                      return (
                         <option value={item.menuItem + '_' + item.price}>{item.menuItem} - {item.price}</option>
                       )
                     })}
@@ -100,7 +103,7 @@ class RequestModal extends React.Component {
               </div>
             </div>
             <ModalFooter>
-              <button className="red-button" onClick={this.onSubmit.bind(this)}>
+              <button className="red-button" onClick={()=>this.onSubmit()}>
                 Submit
               </button>
             </ModalFooter>

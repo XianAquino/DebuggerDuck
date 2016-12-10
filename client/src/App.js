@@ -107,10 +107,14 @@ class Runner extends Component {
   // //Gets all volunteers for today, and all associated requests.
   //   //updates currentData in state, which is then passed to VolunteerRequest Container.
   getCurrentData() {
-    axios.get('/api/volunteer')
+    axios.get('/api/volunteer/')
       .then(response => {
         console.log('Getting Current Data?', response.data.data);
         this.setState({currentData: response.data.data});
+        socket.on('volunteerAdded', (volunteers) => {
+          console.log("volunteersre get", volunteers);
+          this.setState({currentData: volunteers});
+        });
       })
       .catch(error => {
         console.log('Error while getting current data: ', error);
@@ -175,7 +179,8 @@ class Runner extends Component {
     .then(response => {
       console.log('Volunteer posted! ',response);
       this.getCurrentData();
-      this.render();
+      //this.render();
+      socket.emit('volunteer')
     })
     .catch(error => {
       console.log('Error while posting Volunteer: ',error);
@@ -194,11 +199,11 @@ class Runner extends Component {
       volunteerId: volunteerId,
       picture: this.state.picture,
       text: text,
-
       }
     })
       .then(response => {
         console.log('Request submitted: ', response.data);
+        socket.emit('request');
       })
       .catch(error => {
         console.log('Error while submitting food request:', error);
@@ -234,7 +239,7 @@ class Runner extends Component {
           karma={this.state.karma}
           picture={this.state.picture}/>
           <div className='greeting'> Hi, {this.state.username}.</div>
-          <div className='group-select'>Please select a group.</div>
+          <div className='group-select'>Please select a group.!!</div>
             {this.state.groups.map(group =>
               //This maps out all the groups into a list.
               <Groups
@@ -243,6 +248,7 @@ class Runner extends Component {
               key={Math.random()}
               group={group.name} />
             )}
+
             <div className='center'>
               <GroupModal postGroup={this.postGroup.bind(this)}/>
             </div>
@@ -259,6 +265,7 @@ class Runner extends Component {
               postLogin={this.postLogin.bind(this)}
               username={this.state.username}
               picture={this.state.picture} />
+              {console.log("currrrrennnntttt datta sdfsdflksfj",this.state.currentData)}
             <VolunteerRequestsContainer
             //This also needs to be funneled info
               getIdFromGroupName={this.getIdFromGroupName.bind(this)}
@@ -267,7 +274,6 @@ class Runner extends Component {
               karma={this.state.karma}
               currentGroup={this.state.currentGroup}
               currentData={this.state.currentData}
-              getCurrentData={this.getCurrentData.bind(this)}
               postVolunteer={this.postVolunteer.bind(this)}
               postRequest={this.postRequest.bind(this)}
               getCurrentData={this.getCurrentData.bind(this)}
