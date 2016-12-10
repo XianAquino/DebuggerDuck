@@ -66,7 +66,6 @@ class VolunteerModal extends React.Component {
     console.log("On submit at the modal level")
     //resets the option wheel to the greyed out option so people don't just choose the first thing aka Chipotle
     document.getElementById("location").selectedIndex = -1;
-    //console.log('does this even work?',document.getElementById('menu').selectedIndex)
     this.hideModal();
     this.setState({
       isOpen: false,
