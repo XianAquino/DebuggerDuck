@@ -113,7 +113,7 @@ class Volunteer extends Component {
     	return (
           <div className='volunteer-div'>
           <img className='small-profile-pic' src={this.props.volunteer.picture}/>
-          {this.props.volunteer.order_user} is going to {this.props.volunteer.location} at {this.props.volunteer.time}.
+          {this.props.volunteer.order_user} is going to {this.props.volunteer.location} at {this.demilitarizeTime(this.props.volunteer.time)}
 
           {
             requests=== undefined ? null :
