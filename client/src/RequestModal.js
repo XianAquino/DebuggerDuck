@@ -22,14 +22,14 @@ class RequestModal extends React.Component {
   componentDidMount() {
     //this will call getMenu on the location we're at in the volunteer Modal
     getMenu(this.props.location, (menu) => {
-      this.setState({menu: menu})
+      menu.length ? this.setState({menu: menu}) : [];
     })
   }
   onTextChange(event) {
     //every time the user types a new letter, the state is changed to the current input
     var value = event.target.value.split('__')
     var text = value[0]
-    var price = value[1]
+    var price =  value[1]
     console.log('Request Event', text, price);
     this.setState({text: text, price: price});
   }
@@ -37,7 +37,19 @@ class RequestModal extends React.Component {
   onSubmit () {
     //Don't change this invocation.
     console.log('modal text?', this.state.text);
-    this.props.onSubmit(this.state.text, this.state.price);
+    //check if there is anything inside our price input field, if there is, use that instead
+    var price = document.getElementById("price").value.length ? document.getElementById("price").value : this.state.price
+    //target and reset our price and text value fields after an onSubmit is fired
+    document.getElementById("price").value = '';
+    document.getElementById("text").value = '';
+    this.props.onSubmit(this.state.text, price);
+    //we select every menu selection thingy
+    var list = document.getElementsByClassName('menu')
+    //we then loop through our html collection which is an array but not an array, so we can't just forEach it
+    for (var i = 0; i < list.length; i++) {
+      //we then manually set each list to its first value
+      list[i].selectedIndex = -1
+    }
     this.hideModal();
     this.setState({
       isOpen: false,
@@ -84,13 +96,38 @@ class RequestModal extends React.Component {
               <div>
                 Please select an item from our menu below:
                 <br />
-                <select onChange={this.onTextChange.bind(this)}>
+                <select className="menu" onChange={this.onTextChange.bind(this)}>
+
+                <option disabled selected value> -- select a Menu Item -- </option>
                     {this.state.menu.map(item => {
                       return (
                         <option value={item.menuItem + '__' + item.price}>{item.menuItem} - {item.price}</option>
                       )
                     })}
                 </select>
+                 
+                <br />
+                &nbsp; Not There? Add a custom order! &nbsp;
+                <br/>
+                <input 
+                type="text"
+                maxLength="140"
+                onChange={this.onTextChange.bind(this)}
+                className='modal-input third-input'
+                id="text"/>
+                <br />
+                Price
+                <br/>
+                <input
+                  id="price"
+                  type="number"
+                  min = "0"
+                  step = "any"
+                  max = "999"
+                />
+               
+                <br />
+               
               </div>
             </div>
             <ModalFooter>
