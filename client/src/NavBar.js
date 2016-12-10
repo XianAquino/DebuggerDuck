@@ -8,7 +8,7 @@ import FacebookButton from './FacebookButton.js'
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    
+    console.log("NARBAR PROPS", props)
     this.state = {
       loggedIn: false,
       //I have not yet done anything with the karma besides hard code it as 0 and display it.
@@ -34,6 +34,7 @@ class NavBar extends Component {
     this.props.postLogout();
   }
   render() { 
+      console.log("Whats my karma?", this.props.karma)
   		return ( 
     	<div className='nav-bar'>
     		<FacebookButton 

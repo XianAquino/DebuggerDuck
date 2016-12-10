@@ -264,6 +264,7 @@ class Runner extends Component {
               postLogout={this.postLogout.bind(this)}
               postLogin={this.postLogin.bind(this)}
               username={this.state.username}
+              karma={this.state.karma}
               picture={this.state.picture} />
               {console.log("currrrrennnntttt datta sdfsdflksfj",this.state.currentData)}
             <VolunteerRequestsContainer
