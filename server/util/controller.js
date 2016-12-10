@@ -62,18 +62,14 @@ module.exports = {
     },
     requests: (req,res) => {
       var user = req.params.user_name;
-      console.log("username",user);
       db.Order.find({}).exec()
       .then(function(data){
-        var request = [];
+        var requests = [];
         data.forEach(function(volunteers){
-          // console.log("voull", volunteers)
-          // var userRequests = volunteers.requests.filter((request)=> request.user_id=user);
-          // console.log("userRequests", userRequests);
-          // requests.concat(userRequests);
+          var userRequests = volunteers.requests.filter((request)=> request.user_id=user);
+          requests = requests.concat(userRequests);
         })
-        //console.log(requests);
-        //res.send(requests);
+        res.send(requests);
       })
     }
 
