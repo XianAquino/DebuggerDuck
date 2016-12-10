@@ -115,22 +115,22 @@ module.exports = {
       //add functionality here to update karma
       console.log("request body!!!!!", req.body.data)
 
-      db.User.findOne({karma: 0}, function (err, user) {
-        if (err) {
-          console.log("error 120!!!", error)
-        } else {
-          console.log("user 122!!!!", user)
-        }
-      })
+      // db.User.find({karma: req.body.data.karma}, function (err, user) {
+      //   if (err) {
+      //     console.log("error 120!!!", error)
+      //   } else {
+      //     console.log("user 122!!!!", user)
+      //   }
+      // })
 
-      // db.User.findOneAndUpdate({username: req.body.data.username}, {groups[0].karma: 4}, {upsert: false})
-      // .then((data) => {
-      //   console.log("db data!!!!", data) //we want data.order_user
+      db.User.findOneAndUpdate({username: req.body.data.username}, { $inc: { karma: 1 } }, {upsert: false})
+      .then((data) => {
+        console.log("db data!!!!", data) //we want data.order_user
        
-      // })
-      // .catch((err) => {
-      //   console.log(err)
-      // })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
 
       new db.Order({
         order_user: req.body.data.username,
@@ -176,8 +176,8 @@ module.exports = {
      console.log("id",req.params);
      db.Order.find({'_id':ObjectId(id)})
      .then((data) => {
-       console.log("passs");
-       console.log("sdf",data);
+       // console.log("passs");
+       // console.log("sdf",data);
        res.status(201).send(data);
      }).catch((err) => {
        res.sendStatus(400);
