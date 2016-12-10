@@ -17,6 +17,7 @@ import axios from 'axios';
 import io from 'socket.io-client'
 
 import NavBar from './NavBar';
+import UserProfile from './UserProfile'
 import LandingPage from './LandingPage.js';
 import Groups from './Groups.js';
 import VolunteerRequestsContainer from './VolunteerRequestsContainer.js';
@@ -39,6 +40,7 @@ class Runner extends Component {
       karma: 0,
       //currentData holds all volunteers and requests.
       currentData:[],
+      displayUserProfile:false
 
     };
     //Binding context for functions that get passed down.
@@ -169,7 +171,7 @@ class Runner extends Component {
     //Accepts a location, a time, and group.  Pulls username from state.
   postVolunteer(location, time, group) {
     axios.post('/api/volunteer', {data:{
-      username: this.state.username, 
+      username: this.state.username,
       location: location,
       time:  time,
       picture: this.state.picture,
@@ -209,6 +211,15 @@ class Runner extends Component {
       })
   }
 
+  renderUserProfile() {
+    console.log("passs render");
+    this.setState({displayUserProfile:true});
+  }
+
+  hideUserProfile() {
+    this.setState({displayUserProfile:false});
+  }
+
   //There are three possible options when we reach the home page.
 //For each option a navbar is rendered regardless of state.
 //1. LoggedIn is false -> render the Landing page component.
@@ -236,6 +247,7 @@ class Runner extends Component {
           postLogin={this.postLogin.bind(this)}
           username={this.state.username}
           karma={this.state.karma}
+          renderUserProfile={this.renderUserProfile.bind(this)}
           picture={this.state.picture}/>
           <div className='greeting'> Hi, {this.state.username}.</div>
           <div className='group-select'>Please select a group.!!</div>
@@ -251,6 +263,13 @@ class Runner extends Component {
             <div className='center'>
               <GroupModal postGroup={this.postGroup.bind(this)}/>
             </div>
+            {
+              this.state.displayUserProfile ?
+              <UserProfile
+                username={this.state.username}
+                picture={this.state.picture}
+                hideUserProfile= {this.hideUserProfile.bind(this)}/> : null
+            }
           </div>
           )
       } else {
@@ -264,8 +283,8 @@ class Runner extends Component {
               postLogin={this.postLogin.bind(this)}
               username={this.state.username}
               karma={this.state.karma}
+              renderUserProfile={this.renderUserProfile.bind(this)}
               picture={this.state.picture} />
-              {console.log("currrrrennnntttt datta sdfsdflksfj",this.state.currentData)}
             <VolunteerRequestsContainer
             //This also needs to be funneled info
               getIdFromGroupName={this.getIdFromGroupName.bind(this)}
@@ -279,6 +298,13 @@ class Runner extends Component {
               getCurrentData={this.getCurrentData.bind(this)}
               //We pass down the selectDifferentGroup function to this component since the button is rendered there
               selectDifferentGroup={this.selectDifferentGroup.bind(this)} />
+              {
+                this.state.displayUserProfile ?
+                <UserProfile
+                  username={this.state.username}
+                  picture={this.state.picture}
+                  hideUserProfile= {this.hideUserProfile.bind(this)}/> : null
+              }
           </div>
           )
         }

@@ -197,3 +197,11 @@
 transform: scale(1.1);
 opacity: 0.5;
 }
+
+.user-profile {
+	position: absolute;
+	top:50px;
+	width:400px;
+	height: 500px;
+	background-color:white;
+}
