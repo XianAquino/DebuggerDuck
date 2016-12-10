@@ -16,7 +16,6 @@ import changePending from './lib/changePending'
 class Volunteer extends Component {
   constructor(props) {
     super(props);
-    console.log("Volunteer Props location: ", this.props.volunteer.location)
     this.state = {
       pending: true,
       requests: [],

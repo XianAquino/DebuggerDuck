@@ -38,6 +38,13 @@ class RequestModal extends React.Component {
     //Don't change this invocation.
     console.log('modal text?', this.state.text);
     this.props.onSubmit(this.state.text, this.state.price);
+    //we select every menu selection thingy
+    var list = document.getElementsByClassName('menu')
+    //we then loop through our html collection which is an array but not an array, so we can't just forEach it
+    for (var i = 0; i < list.length; i++) {
+      //we then manually set each list to its first value
+      list[i].selectedIndex = -1
+    }
     this.hideModal();
     this.setState({
       isOpen: false,
@@ -84,7 +91,8 @@ class RequestModal extends React.Component {
               <div>
                 Please select an item from our menu below:
                 <br />
-                <select onChange={this.onTextChange.bind(this)}>
+                <select className="menu" onChange={this.onTextChange.bind(this)}>
+                <option disabled selected value> -- select a Menu Item -- </option>
                     {this.state.menu.map(item => {
                       return (
                         <option value={item.menuItem + '__' + item.price}>{item.menuItem} - {item.price}</option>
