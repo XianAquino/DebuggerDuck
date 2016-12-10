@@ -1,14 +1,19 @@
 import React from 'react';
+import UserVolunteer from './UserVolunteer.js'
 
 const UserVolunteers = (props) => {
   return(
-    <div className = 'user-volunteer-list';
+    <div className = 'user-volunteer-list'>
       <h2>Volunteers</h2>
       <ul>
         {
-          this.props.volunteers.map( volunteer => {
-            <UserVolunteer  volunteer={volunteer}/>
-          })
+          props.volunteers.map( (volunteer) =>
+            <UserVolunteer  key ={Math.random()}
+              location={volunteer.location}
+              time={volunteer.time}
+              createdAt={volunteer.createdAt}
+            />
+          )
         }
       </ul>
     </div>

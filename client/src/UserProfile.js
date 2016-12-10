@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import UserVolunteers from './UserVolunteers'
+import UserVolunteers from './UserVolunteers.js'
 
 class UserProfile extends React.Component {
   constructor(props){
@@ -13,23 +13,23 @@ class UserProfile extends React.Component {
   }
 
   componentWillMount(){
-    this.getVolunteers();
-    this.getRequests();
+    this.getVolunteers()
+    .then(response => {
+      this.setState({volunteers:response.data});
+    this.getRequests()
+        .then(response => {
+          this.setState({requests:response.data});
+        });
+    });
+
   }
 
   getVolunteers(){
-    axios.get(`api/user/volunteers/${this.state.username}`)
-    .then(response => {
-      this.setState({volunteers:response.data});
-    })
-
+   return  axios.get(`api/user/volunteers/${this.state.username}`)
   }
 
   getRequests(){
-    axios.get(`api/user/requests/${this.state.username}`)
-    .then(response => {
-      this.setState({requests:response.data});
-    })
+    return  axios.get(`api/user/requests/${this.state.username}`)
   }
 
   render(){
@@ -39,8 +39,10 @@ class UserProfile extends React.Component {
         <img src = {this.props.picture} />
         <p>{this.props.username}</p>
         <div className = 'user-history'>
-          <h2>Volunteers</h2>
-          <UserVolunteers volunteers = {this.state.volunteers}/>
+          {
+            this.state.volunteers === undefined? null :
+            <UserVolunteers volunteers = {this.state.volunteers}/>
+          }
         </div>
       </div>
     )
