@@ -21,7 +21,6 @@ import LandingPage from './LandingPage.js';
 import Groups from './Groups.js';
 import VolunteerRequestsContainer from './VolunteerRequestsContainer.js';
 import GroupModal from './GroupModal';
-import saveRestaurant from './lib/saveRestaurant';
 
 const socket = io();
 
