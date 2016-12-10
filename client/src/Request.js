@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 //through the props.
 class Request extends Component {
 	constructor(props) {
-    console.log('these are request props',props)
     super(props);
     this.state = {};
   }

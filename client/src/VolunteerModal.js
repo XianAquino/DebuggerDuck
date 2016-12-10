@@ -23,7 +23,6 @@ class VolunteerModal extends React.Component {
   componentWillMount() {
     this.setTimeState();
     getAllRestaurants((restaurant)=>{
-      console.log(restaurant)
       this.setState({restaurants:restaurant.data})
     })
 
@@ -60,12 +59,12 @@ class VolunteerModal extends React.Component {
     //every time the user types a new letter, the state is changed to the current input
     console.log("event location", event);
     this.setState({location: event.target.value});
-    console.log('this is our location state',this.state.location)
   }
 
   onSubmit (){
     this.props.postVolunteer(this.state.location, this.state.time, this.props.currentGroup);
     console.log("On submit at the modal level")
+    //resets the option wheel to the greyed out option so people don't just choose the first thing aka Chipotle
     document.getElementById("location").selectedIndex = -1;
     this.hideModal();
     this.setState({

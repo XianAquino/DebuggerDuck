@@ -123,6 +123,8 @@ class Volunteer extends Component {
                 key= {Math.random()}
                 request={request}/>
             )
+          } {
+            //we pass in the location so we send a GET request to get the menu for that location later down the line
           }
           <RequestModal onSubmit={this.onSubmit.bind(this)} location={this.props.volunteer.location}/>
           </div>

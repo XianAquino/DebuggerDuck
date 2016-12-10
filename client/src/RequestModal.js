@@ -12,7 +12,6 @@ import {
 class RequestModal extends React.Component {
   constructor(props) {
     super(props);
-    console.log('these are the props for the requeset modal',this.props)
     this.state = {
       isOpen: false,
       text:'',
@@ -20,6 +19,7 @@ class RequestModal extends React.Component {
     }
   }
   componentDidMount() {
+    //this will call getMenu on the location we're at in the volunteer Modal
     getMenu(this.props.location, (menu) => {
       this.setState({menu: menu})
     })
