@@ -137,7 +137,7 @@ module.exports = {
 
       db.Order.findOneAndUpdate(
          {_id:req.body.data.volunteerId},
-         {$push: { requests:{user_id: req.body.data.username, picture: req.body.data.picture, text:req.body.data.text} } }
+         {$push: { requests:{user_id: req.body.data.username, picture: req.body.data.picture, text:req.body.data.text, price:req.body.data.price} } }
         )
       .then((data) => {
         //console.log('Data sent to DB.', data);

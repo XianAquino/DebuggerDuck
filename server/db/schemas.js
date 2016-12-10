@@ -53,7 +53,7 @@ const OrderSchema = new Schema ({
 	time: String,
 	group_id: String,
 	picture: String,
-	requests: [{user_id: String, picture: String, text: String}],
+	requests: [{user_id: String, picture: String, text: String, price: Number}],
 	createdAt: { type : Date, default: Date.now },
 	pending: {type:Boolean, default: true}
 })
