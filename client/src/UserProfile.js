@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import UserVolunteers from './UserVolunteers.js'
+import UserVolunteers from './UserVolunteers.js';
+import UserRequests from './UserRequests.js';
+import PieChart from './PieChart.js';
 
 class UserProfile extends React.Component {
   constructor(props){
@@ -8,17 +10,22 @@ class UserProfile extends React.Component {
     this.state = {
       username : this.props.username,
       volunteers:undefined,
-      requests: undefined
+      requests: undefined,
+      chartData:undefined
     }
   }
 
   componentWillMount(){
     this.getVolunteers()
-    .then(response => {
-      this.setState({volunteers:response.data});
-    this.getRequests()
+      .then(response => {
+        var data = []
+        this.setState({volunteers:response.data});
+        data.push({label:"volunteers",value:response.data.length})
+      this.getRequests()
         .then(response => {
           this.setState({requests:response.data});
+          data.push({label:"requests",value:response.data.length})
+          this.setState({chartData:data});
         });
     });
 
@@ -33,6 +40,9 @@ class UserProfile extends React.Component {
   }
 
   render(){
+
+    var size = 300;
+    console.log(this.state.chartData,"    data");
     return (
       <div className = 'user-profile'>
         <p onClick={()=>this.props.hideUserProfile()}>x</p>
@@ -40,8 +50,20 @@ class UserProfile extends React.Component {
         <p>{this.props.username}</p>
         <div className = 'user-history'>
           {
-            this.state.volunteers === undefined? null :
+            this.state.volunteers === undefined ? null :
             <UserVolunteers volunteers = {this.state.volunteers}/>
+          }
+          {
+            this.state.requests === undefined ? null :
+            <UserRequests requests = {this.state.requests}/>
+          }
+          {
+            this.state.chartData === undefined ? null :
+            <svg width={size} height= {size}>
+              <g transform={`translate(${size/2}, ${size/2})`}>
+                <PieChart data={this.state.chartData} size={size}/>
+              </g>
+            </svg>
           }
         </div>
       </div>
