@@ -112,7 +112,8 @@ module.exports = {
     },
     // Volunteer controller functions for POST
     post: (req, res) => {
-
+      //add functionality here to update karma
+      console.log("request body!!!!!", req.body.data)
       new db.Order({
         order_user: req.body.data.username,
         location: req.body.data.location,
@@ -122,9 +123,18 @@ module.exports = {
         requests: req.body.data.requests
       }).save()
       .then((data) => {
-        res.status(201).send(data);
+        console.log("data!!!!", data) //we want data.order_user
+        user.findOneAndUpdate({username: data.order_user}, {karma: 4}, {upsert: false}, function (err, data) {
+          if (err) {
+            return res.send(500, { error: err });
+          } else{
+          res.status(201).send(data);
+        }
+        })
+        //res.status(201).send(data);
       })
       .catch((err) => {
+        console.log(err)
         res.sendStatus(400)
       })
     }
