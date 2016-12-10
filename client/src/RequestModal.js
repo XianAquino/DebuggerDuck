@@ -30,7 +30,7 @@ class RequestModal extends React.Component {
     this.setState({text: event.target.value});
   }
 
-  onSubmit (){
+  onSubmit () {
     //Don't change this invocation.
     console.log('modal text?', this.state.text);
     this.props.onSubmit(this.state.text);

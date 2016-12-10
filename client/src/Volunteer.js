@@ -46,6 +46,7 @@ class Volunteer extends Component {
         volunteerId: this.props.volunteer._id,
         picture: this.props.picture,
         text: text,
+        price: 0.00
         }
       }
     )
