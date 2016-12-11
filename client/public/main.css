@@ -1,13 +1,7 @@
 html{
   background-color: white;
 }
-.nav-bar {
-	height:80px;
-	background-color:#e60000;
-	padding:10px;
-	color:white;
-	width:100%;
-}
+
 
 .body {
   background-color:white;
@@ -71,4 +65,18 @@ html{
   left:45%;
   width:100px;
   height:70px;
+}
+
+/** nav-bar **/
+.nav-bar {
+	height:80px;
+	background-color:#e60000;
+	padding:10px;
+	color:white;
+	width:100%;
+}
+
+.nav-bar .karma, .username {
+  background-color: transparent;
+  color: white;
 }
