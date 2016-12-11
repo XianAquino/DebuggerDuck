@@ -233,7 +233,7 @@ class Runner extends Component {
       return (
         <div>
           <div className='nav-bar'></div>
-          <div class= 'landing-bg'>
+          <div className= 'landing-bg'>
             <LandingPage />
           </div>
         </div>
@@ -241,7 +241,7 @@ class Runner extends Component {
     } else {
       if (this.state.currentGroup===''){
         return (
-          <div>
+          <div className ='white-bg'>
           <NavBar
           //Funnel down info into the navbar
           loggedIn={true}
@@ -252,7 +252,7 @@ class Runner extends Component {
           renderUserProfile={this.renderUserProfile.bind(this)}
           picture={this.state.picture}/>
           <div className='greeting'> Hi, {this.state.username}.</div>
-          <div className='group-select'>Please select a group.!!</div>
+          <div className='group-select'>Please select a group.</div>
             {this.state.groups.map(group =>
               //This maps out all the groups into a list.
               <Groups

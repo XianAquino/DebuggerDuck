@@ -123,13 +123,13 @@ class Volunteer extends Component {
                 request={request}/>
             )
           }
-          { 
-          "The Grand Total is: $" +
+
+          <span>The Grand Total is: </span><span className='total'>${
           requests.reduce((a,x) => {
             a += x.price
             return a
-          }, 0).toFixed(2)
-          }
+          }, 0).toFixed(2)}</span>
+
           <RequestModal onSubmit={this.onSubmit.bind(this)} location={this.props.volunteer.location}/>
           </div>
         )

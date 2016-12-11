@@ -1,10 +1,8 @@
-html{
+html, body{
   background-color: white;
 }
-
-
-.body {
-  background-color:white;
+body{
+  background-color: white;
 }
 /** Landing page **/
 
@@ -79,4 +77,84 @@ html{
 .nav-bar .karma, .username {
   background-color: transparent;
   color: white;
+}
+
+
+/** main **/
+.white-bg {
+  background-color: white;
+}
+
+.greeting {
+  background-color: white;
+}
+
+.group-select {
+  background-color: white;
+}
+.group {
+  background-color: white;
+}
+.group button {
+  background:#d32323;
+  color: white;
+  width: 400px;
+  margin: 10px;
+  border-radius: 10px ;
+}
+
+.center {
+  background-color: white;
+}
+
+
+.red-button {
+  background: linear-gradient(#b30000, #ff3333);
+  background: -webkit-linear-gradient(#b30000, #ff3333);
+  background: -o-linear-gradient(#b30000, #ff3333);
+  background: -moz-linear-gradient(#b30000, #ff3333);
+}
+
+
+.black-button {
+  color:white;
+	margin:8px;
+	border:none;
+	border-radius:8px;
+	padding:7px;
+	font-size:16px;
+	border:#808080 solid 1px;
+  position:relative;
+  background: linear-gradient(#1a1a1a, #4d4d4d);
+  background: -webkit-linear-gradient(#1a1a1a, #4d4d4d);
+  background: -o-linear-gradient(#1a1a1a, #4d4d4d);
+  background: -moz-linear-gradient(#1a1a1a, #4d4d4d);
+}
+
+
+/** Group Page **/
+
+.request-container {
+  background-color: white;
+}
+.volunteer-div {
+  background-color: #e9ebee;
+  box-shadow: 2px 5px 5px #333333;
+}
+.orange {
+  background-color: transparent;
+}
+
+.volunteer-div span {
+  background-color: transparent;
+  font-size:30px;
+}
+
+.volunteer-div .total{
+  font-weight: bold;
+  color:#cc0000;
+}
+
+.individual-request {
+  background-color: #e9ebee;
 }
