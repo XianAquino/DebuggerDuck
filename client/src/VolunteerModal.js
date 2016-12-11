@@ -137,7 +137,7 @@ class VolunteerModal extends React.Component {
                 maxLength="140"
                 onChange={this.onLocationChange.bind(this)}
                 className='modal-input third-input'
-                id="text"/>
+                id="restaurant"/>
                 {/*<input
                 onChange={this.onLocationChange.bind(this)}
                 className='modal-input'
