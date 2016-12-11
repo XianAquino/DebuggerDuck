@@ -16,8 +16,7 @@ class RequestModal extends React.Component {
       isOpen: false,
       text:'',
       price: null,
-      menu: [],
-      showMenu: false
+      menu: []
     }
   }
   componentDidMount() {
