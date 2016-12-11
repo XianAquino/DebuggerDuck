@@ -106,7 +106,7 @@ class VolunteerModal extends React.Component {
         <div className='center'>
 
           <button className="red-button" onClick={()=>this.openModal()}>
-            Volunteer your services
+            Earn Karma - Volunteer your services
           </button>
 
           <Modal isOpen={isOpen} onRequestHide={this.hideModal.bind(this)}>

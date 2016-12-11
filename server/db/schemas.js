@@ -15,7 +15,7 @@ const UserSchema = new Schema ({
 	fb_id: String,
 	picture: String,
 	groups: [{group_id: String, karma: {type: Number, default:0}}],
-	karma: {type: Number, default:2}
+	karma: {type: Number, default: 10}
 });
 
 var restaurantSchema = new Schema({

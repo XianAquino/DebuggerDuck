@@ -84,7 +84,7 @@ class RequestModal extends React.Component {
     return (
         <div className='center orange'>
           <button className="red-button" onClick={() => this.openModal()}>
-            Make a request
+            Spend Karma - Make a request
           </button>
 
           <Modal isOpen={isOpen} onRequestHide={this.hideModal.bind(this)}>

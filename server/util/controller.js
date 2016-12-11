@@ -135,15 +135,8 @@ module.exports = {
       //add functionality here to update karma
       console.log("request body!!!!!", req.body.data)
 
-      // db.User.find({karma: req.body.data.karma}, function (err, user) {
-      //   if (err) {
-      //     console.log("error 120!!!", error)
-      //   } else {
-      //     console.log("user 122!!!!", user)
-      //   }
-      // })
 
-      db.User.findOneAndUpdate({username: req.body.data.username}, { $inc: { karma: 1 } }, {upsert: false})
+      db.User.findOneAndUpdate({username: req.body.data.username}, { $inc: { karma: 5 } }, {upsert: false})
       .then((data) => {
         console.log("db data!!!!", data) //we want data.order_user
        
@@ -176,6 +169,16 @@ module.exports = {
     //Data is posted in req.body
     post: (req, res) => {
       console.log("request body!!!!!!", req.body)
+
+      db.User.findOneAndUpdate({username: req.body.data.username}, { $inc: { karma: -1 } }, {upsert: false})
+      .then((data) => {
+        console.log("db data!!!!", data) //we want data.order_user
+       
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
       db.Order.findOneAndUpdate(
          {_id:req.body.data.volunteerId},
          {$push: { requests:{user_id: req.body.data.username, picture: req.body.data.picture, text:req.body.data.text, price:req.body.data.price} } }
