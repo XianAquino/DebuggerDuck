@@ -32,7 +32,7 @@ var  VolunteerRequestContainer = (props)=>  {
             <VolunteerModal  currentGroup={props.currentGroup} postVolunteer={props.postVolunteer} />
           </div>
           <div className='no-requests center'>No one has volunteered to grab food yet. Why don't you go first?</div>
-          <div className='center'><button className='red-button new-group' onClick={props.selectDifferentGroup}>Select a different group</button></div>
+          <div className='center'><button className='black-button new-group' onClick={props.selectDifferentGroup}>Select a different group</button></div>
         </div>
         )
     } else {
@@ -59,7 +59,7 @@ var  VolunteerRequestContainer = (props)=>  {
             //This maps out the volunteers in the this.state.volunteers array into the child component, volunteer
             volunteer={volunteer}/>
           )}
-        <div className='center'><button className='red-button new-group' onClick={()=>props.selectDifferentGroup()}>Select a different group</button></div>
+        <div className='center'><button className='black-button new-group' onClick={()=>props.selectDifferentGroup()}>Select a different group</button></div>
      </div>
     );
     }

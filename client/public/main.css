@@ -1,0 +1,160 @@
+html, body{
+  background-color: white;
+}
+body{
+  background-color: white;
+}
+/** Landing page **/
+
+.landing-page {
+  background: #fff url('./images/FoodRunner.jpg') repeat-x top right;
+  float:right;
+  width:100%;
+  height:100vh;
+  color:white;
+}
+
+.landing-side {
+  background: rgba(0, 0, 0, 0.8);
+  float:left;
+  width:600px;
+  height:100vh;
+}
+
+.landing-side h1, h2 {
+  background-color: transparent;
+}
+
+.landing-side h1 {
+  font-size: 50px;
+}
+
+.landing-side h2 {
+  font-size: 80px;
+  font-weight: bold;
+}
+.welcome {
+  background-color: transparent;
+  color:white;
+}
+
+.spacer {
+  background-color: transparent;
+}
+.tag-line {
+  background-color: transparent;
+}
+
+.tag-line p {
+  background-color: transparent;
+  font-size: 20px;
+  color: white;
+}
+
+.center-login {
+  margin:40px;
+  background-color: transparent;
+  text-align:center;
+}
+.landing-runner{
+  background: transparent url('./images/runner-small.png') no-repeat top left;
+  position: absolute;
+  top:0;
+  left:45%;
+  width:100px;
+  height:70px;
+}
+
+/** nav-bar **/
+.nav-bar {
+	height:80px;
+	background-color:#e60000;
+	padding:10px;
+	color:white;
+	width:100%;
+}
+
+.nav-bar .karma, .username {
+  background-color: transparent;
+  color: white;
+}
+
+
+/** main **/
+.white-bg {
+  background-color: white;
+}
+
+.greeting {
+  background-color: white;
+}
+
+.group-select {
+  background-color: white;
+}
+.group {
+  background-color: white;
+}
+.group button {
+  background:#d32323;
+  color: white;
+  width: 400px;
+  margin: 10px;
+  border-radius: 10px ;
+}
+
+.center {
+  background-color: white;
+}
+
+
+.red-button {
+  background: linear-gradient(#b30000, #ff3333);
+  background: -webkit-linear-gradient(#b30000, #ff3333);
+  background: -o-linear-gradient(#b30000, #ff3333);
+  background: -moz-linear-gradient(#b30000, #ff3333);
+}
+
+
+.black-button {
+  color:white;
+	margin:8px;
+	border:none;
+	border-radius:8px;
+	padding:7px;
+	font-size:16px;
+	border:#808080 solid 1px;
+  position:relative;
+  background: linear-gradient(#1a1a1a, #4d4d4d);
+  background: -webkit-linear-gradient(#1a1a1a, #4d4d4d);
+  background: -o-linear-gradient(#1a1a1a, #4d4d4d);
+  background: -moz-linear-gradient(#1a1a1a, #4d4d4d);
+}
+
+
+/** Group Page **/
+
+.request-container {
+  background-color: white;
+}
+.volunteer-div {
+  background-color: #e9ebee;
+  box-shadow: 2px 5px 5px #333333;
+}
+.orange {
+  background-color: transparent;
+}
+
+.volunteer-div span {
+  background-color: transparent;
+  font-size:30px;
+}
+
+.volunteer-div .total{
+  font-weight: bold;
+  color:#cc0000;
+}
+
+.individual-request {
+  background-color: #e9ebee;
+}

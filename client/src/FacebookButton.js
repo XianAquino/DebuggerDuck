@@ -17,7 +17,7 @@ class FacebookButton extends Component {
       	return (
 
           //<div className='center'><a login={this.props.login} className='fb-button-big' href='/login'><i className="fa fa-facebook" aria-hidden="true"></i> Sign up now with Facebook</a></div>
-      		<div className='center'><a className='fb-button-big' href='/login'><i className="fa fa-facebook" aria-hidden="true"></i> Sign up now with Facebook</a></div>
+      		<div className='center-login'><a className='fb-button-big' href='/login'><i className="fa fa-facebook" aria-hidden="true"></i> Sign up now with Facebook</a></div>
       		)
       } else{
         if (this.props.loggedIn===false){
@@ -31,7 +31,7 @@ class FacebookButton extends Component {
           )
         }else {
           return (
-           <a 
+           <a
              //onClick={this.props.logOut}
              className='fb-button'
              href='api/user/logout'>
