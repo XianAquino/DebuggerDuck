@@ -127,7 +127,9 @@ app.post('/restaurants/:name',function(req,res){
 app.get('/menuItem/:name',function(req,res){
   var name = req.params.name
   db.Restaurant.find({name:name},function(err,data){
-    res.send(data[0].menu)
+    //we check if there is any data, if not we send back an empty array
+    var menu = data.length ? data[0].menu : []
+    res.send(menu)
   })
 })
 //will add a menu item to a restaurant when provided name of that restaurant, the menu item, and the price of it

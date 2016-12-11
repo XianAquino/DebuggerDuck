@@ -22,7 +22,8 @@ class RequestModal extends React.Component {
   componentDidMount() {
     //this will call getMenu on the location we're at in the volunteer Modal
     getMenu(this.props.location, (menu) => {
-      menu.length ? this.setState({menu: menu}) : [];
+      //checking if we have menu for that location, if we get nothing back we don't and we keep menu an empty array
+      menu.length ? this.setState({menu: menu})  : null
     })
   }
   onTextChange(event) {
@@ -71,6 +72,9 @@ class RequestModal extends React.Component {
 
 
   render() {
+    var menu = this.state.menu
+    //this is what we'll show at the top of our option wheel, we update this so the user knows on glance if there is a menu for that custom location or not
+    var disabledText = this.state.menu.length ?  '-- select a Menu Item --' : 'No Menu for this location!' 
     let subModalDialogStyles = {
       base: {
         bottom: -600,
@@ -97,13 +101,15 @@ class RequestModal extends React.Component {
                 Please select an item from our menu below:
                 <br />
                 <select className="menu" onChange={this.onTextChange.bind(this)}>
-
-                <option disabled selected value> -- select a Menu Item -- </option>
-                    {this.state.menu.map(item => {
-                      return (
-                        <option value={item.menuItem + '__' + item.price}>{item.menuItem} - {item.price}</option>
-                      )
-                    })}
+                
+                  
+                    <option disabled selected value>{disabledText}</option>
+                      {menu.map(item => {
+                        return (
+                          <option value={item.menuItem + '__' + item.price}>{item.menuItem} - {item.price}</option>
+                        )
+                      })
+                      }
                 </select>
                  
                 <br />

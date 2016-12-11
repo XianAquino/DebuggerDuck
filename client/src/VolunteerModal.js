@@ -129,6 +129,15 @@ class VolunteerModal extends React.Component {
                   )
                 })}
                 </select>
+                <br/>
+                &nbsp; Not There? Where do you want to go? &nbsp;
+                <br/>
+                <input 
+                type="text"
+                maxLength="140"
+                onChange={this.onLocationChange.bind(this)}
+                className='modal-input third-input'
+                id="text"/>
                 {/*<input
                 onChange={this.onLocationChange.bind(this)}
                 className='modal-input'
