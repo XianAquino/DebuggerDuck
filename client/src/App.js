@@ -233,7 +233,9 @@ class Runner extends Component {
       return (
         <div>
           <div className='nav-bar'></div>
-          <LandingPage />
+          <div class= 'landing-bg'>
+            <LandingPage />
+          </div>
         </div>
         )
     } else {

@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import FacebookButton from './FacebookButton.js';
 
-//Not much to this component. Just some minor styling. 
+//Not much to this component. Just some minor styling.
 
 class LandingPage extends Component {
    constructor(props) {
@@ -12,15 +12,23 @@ class LandingPage extends Component {
 
    render() {
       return (
-      	<div>
-      		<div className='spacer'></div>
-        	<div className='welcome'>Welcome to Food Runner.</div>
-        	<div className='tag-line'>Help your team. &nbsp; Help yourself. &nbsp; Eat real food.</div> 
-        	<FacebookButton onClick={() => this.props.login} position={'bottom'}/>
-        </div>	
+      	<div className='landing-page'>
+          <div className='landing-side'>
+        		<div className='spacer'></div>
+            <div className='landing-runner'></div>
+          	<div className='welcome'>
+              <h1>Welcome to </h1>
+              <h2>Food Runner 2.0</h2>
+            </div>
+          	<div className='tag-line'>
+              <p>Help your team. &nbsp; Help yourself. &nbsp; Eat real food.</p>
+            </div>
+          	<FacebookButton onClick={() => this.props.login} position={'bottom'}/>
+          </div>
+        </div>
       )
    }
-   
+
 };
 
 export default LandingPage;
