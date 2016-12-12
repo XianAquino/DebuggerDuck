@@ -41,12 +41,7 @@ var callbackURL = deployedUrl || credentials.facebook.callbackURL
   },
   //facebook sends back tokens and profile
   function(accessToken, refreshToken, profile, done) {
-    if(profile.displayName === 'Bennett Staley'){
-      (req,res) => {
-        res.sendStatus(403);
-      }
 
-    }else{
       db.User.findOne({fb_id: profile.id}).exec()
         .then((data) => {
           console.log(data);
@@ -65,7 +60,6 @@ var callbackURL = deployedUrl || credentials.facebook.callbackURL
           }
         })
        return done(null, profile);
-    }
   }));
 
 
