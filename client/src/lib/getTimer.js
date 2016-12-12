@@ -19,7 +19,7 @@ function getTimer(end){
     counter = counter/60
     }
     //we're adding 15 minutes worth of seconds onto this so it'll expire 15min after the time its supposed to
-    end += 900
+    end[1] += 900
     //find out the difference between the two times, basically we're looking for if its a negative number or not
   var difference = ((end[0]+end[1])-(start[0]+start[1]))
 return difference
