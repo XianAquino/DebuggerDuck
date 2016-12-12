@@ -5,7 +5,7 @@ const UserVolunteers = (props) => {
   var size = props.volunteers.length
   return(
     <div className = 'user-volunteer-list'>
-      <h2>Volunteers: { size ? size : 0 }</h2>
+      <h2 className='history-header'>Volunteers: { size ? size : 0 }</h2>
       <ul>
         {
           props.volunteers.map( (volunteer) =>
