@@ -6,7 +6,7 @@ const PieChart = ({data, size}) => {
   let innerRadius = 0;
 
   let colors = d3.scaleOrdinal()
-    .range(["#1E90FF", "#B22222"]);
+    .range(["#ff471a", "#990000"]);
 
   let pie = d3
     .pie()
@@ -20,14 +20,14 @@ const PieChart = ({data, size}) => {
 
   let labelArc = d3
     .arc()
-    .outerRadius(outerRadius - 40)
-    .innerRadius(outerRadius - 40);
+    .outerRadius(outerRadius - 50)
+    .innerRadius(outerRadius - 50);
 
   let chart = pie(data).map((d,i) => (
     <g key={i}>
       <path fill={colors(i)} d={arc(d)} stroke ="#fff" />
-      <text transform={`translate(${labelArc.centroid(d)})`}
-        dy=".50em" style={{font: '10px sans-serif',
+      <text fill={'#fff'} transform={`translate(${labelArc.centroid(d)})`}
+        dy=".50em" style={{font: '17px sans-serif',
         textAnchor: 'middle'}}>
         {d.data.label}
       </text>

@@ -46,18 +46,11 @@ class UserProfile extends React.Component {
     console.log(this.state.chartData,"    data");
     return (
       <div className = 'user-profile'>
-        <p onClick={()=>this.props.hideUserProfile()}>x</p>
-        <img src = {this.props.picture} />
-        <p>{this.props.username}</p>
-        <div className = 'user-history'>
-          {
-            this.state.volunteers === undefined ? null :
-            <UserVolunteers volunteers = {this.state.volunteers} />
-          }
-          {
-            this.state.requests === undefined ? null :
-            <UserRequests requests = {this.state.requests} />
-          }
+        <p className='exit black-button' onClick={()=>this.props.hideUserProfile()}>x</p>
+        <h1>Profile</h1>
+        <div className = 'profile-left' >
+          <img src = {this.props.picture} />
+          <p className='user-name'>{this.props.username}</p>
           {
             //don't display the pie chart if data is undefine or both requests and volunteers are empty
             data === undefined || (data[0].value===0&&data[1].value===0) ? null :
@@ -67,7 +60,22 @@ class UserProfile extends React.Component {
               </g>
             </svg>
           }
+
         </div>
+
+        <div className = 'user-history'>
+          {
+            this.state.volunteers === undefined ? null :
+            <UserVolunteers volunteers = {this.state.volunteers} />
+          }
+          {
+            this.state.requests === undefined ? null :
+            <UserRequests requests = {this.state.requests} />
+          }
+
+        </div>
+
+
       </div>
     )
   }
