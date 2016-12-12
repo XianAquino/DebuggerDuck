@@ -220,6 +220,10 @@ class Runner extends Component {
     this.setState({displayUserProfile:false});
   }
 
+  updateKarma(number) {
+    this.setState({karma:this.state.karma + number})
+  }
+
   //There are three possible options when we reach the home page.
 //For each option a navbar is rendered regardless of state.
 //1. LoggedIn is false -> render the Landing page component.
@@ -289,6 +293,7 @@ class Runner extends Component {
               picture={this.state.picture} />
             <VolunteerRequestsContainer
             //This also needs to be funneled info
+              updateKarma = {this.updateKarma.bind(this)}
               getIdFromGroupName={this.getIdFromGroupName.bind(this)}
               username={this.state.username}
               picture={this.state.picture}

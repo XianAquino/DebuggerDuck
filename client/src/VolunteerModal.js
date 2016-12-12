@@ -62,6 +62,7 @@ class VolunteerModal extends React.Component {
   }
 
   onSubmit (){
+
     this.props.postVolunteer(this.state.location, this.state.time, this.props.currentGroup);
     console.log("On submit at the modal level")
     //resets the option wheel to the greyed out option so people don't just choose the first thing aka Chipotle
@@ -72,6 +73,7 @@ class VolunteerModal extends React.Component {
       location: this.state.restaurants[0],
     });
     this.setTimeState();
+    this.props.updateKarma(5);
   }
 
   openModal (){
@@ -132,7 +134,7 @@ class VolunteerModal extends React.Component {
                 <br/>
                 &nbsp; Not There? Where do you want to go? &nbsp;
                 <br/>
-                <input 
+                <input
                 type="text"
                 maxLength="140"
                 onChange={this.onLocationChange.bind(this)}

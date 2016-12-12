@@ -130,7 +130,7 @@ class Volunteer extends Component {
             return a
           }, 0).toFixed(2)}</span>
 
-          <RequestModal onSubmit={this.onSubmit.bind(this)} location={this.props.volunteer.location}/>
+          <RequestModal updateKarma ={this.props.updateKarma} onSubmit={this.onSubmit.bind(this)} location={this.props.volunteer.location}/>
           </div>
         )
       } else {
@@ -138,7 +138,7 @@ class Volunteer extends Component {
           <div className='volunteer-div'>
           <img className='small-profile-pic' src={this.props.volunteer.picture}/>
           {this.props.volunteer.order_user} is going to {this.props.volunteer.location} at {this.demilitarizeTime(this.props.volunteer.time)}
-          <RequestModal onSubmit={this.onSubmit.bind(this)} location={this.props.volunteer.location}/>
+          <RequestModal updateKarma ={this.props.updateKarma} onSubmit={this.onSubmit.bind(this)} location={this.props.volunteer.location}/>
           </div>
         )
       }

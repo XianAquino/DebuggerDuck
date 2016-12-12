@@ -36,7 +36,7 @@ class RequestModal extends React.Component {
     console.log('Request Event', text, price);
     this.setState({text: text,price:price});
   } else{
-    var textChange = event.target.value 
+    var textChange = event.target.value
     this.setState({text: textChange})
   }
 }
@@ -60,6 +60,7 @@ onPriceChange(event){
       //we then manually set each list to its first value
       list[i].selectedIndex = -1
     }
+    this.props.updateKarma(-1);
     this.hideModal();
     this.setState({
       isOpen: false,
@@ -84,7 +85,7 @@ onPriceChange(event){
   render() {
     var menu = this.state.menu
     //this is what we'll show at the top of our option wheel, we update this so the user knows on glance if there is a menu for that custom location or not
-    var disabledText = this.state.menu.length ?  '-- select a Menu Item --' : 'No Menu for this location!' 
+    var disabledText = this.state.menu.length ?  '-- select a Menu Item --' : 'No Menu for this location!'
     let subModalDialogStyles = {
       base: {
         bottom: -600,
@@ -111,8 +112,8 @@ onPriceChange(event){
                 Please select an item from our menu below:
                 <br />
                 <select className="menu" onChange={this.onTextChange.bind(this)}>
-                
-                  
+
+
                     <option disabled selected value>{disabledText}</option>
                       {menu.map(item => {
                         return (
@@ -121,11 +122,11 @@ onPriceChange(event){
                       })
                       }
                 </select>
-                 
+
                 <br />
                 &nbsp; Not There? Add a custom order! &nbsp;
                 <br/>
-                <input 
+                <input
                 type="text"
                 maxLength="140"
                 onChange={this.onTextChange.bind(this)}
@@ -138,11 +139,11 @@ onPriceChange(event){
                   id="price"
                   type="number"
                   onChange={this.onPriceChange.bind(this)}
-                 
+
                 />
-               
+
                 <br />
-               
+
               </div>
             </div>
             <ModalFooter>
