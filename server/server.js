@@ -18,8 +18,8 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 // Check to see if there is a port environment variable or just use port 4040 instead
-module.exports.NODEPORT =  4040;
 
+var port = process.env.PORT || 4040;
 
 //OAuth strategies require a 'verify' function that receives accessToken
 //for accessing FB API. Function must invoke 'cb' with a user object
@@ -233,8 +233,8 @@ io.on('connection', function(socket){
 
 });
 
-http.listen(4040, function(){
-  console.log('listening on *:4040');
+http.listen(port, function(){
+  console.log('listening on *:'+port);
 });
 
 
