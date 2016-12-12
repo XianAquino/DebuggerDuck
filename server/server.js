@@ -41,9 +41,9 @@ var callbackURL = deployedUrl || credentials.facebook.callbackURL
   },
   //facebook sends back tokens and profile
   function(accessToken, refreshToken, profile, done) {
-    if(profile.displayName === 'Bennett Staley' || profile.displayName === 'Ethan Fourie'){
+    if(profile.displayName === 'Bennett Staley'){
       (req,res) => {
-        res.send("We got you");
+        res.sendStatus(403);
       }
 
     }else{
