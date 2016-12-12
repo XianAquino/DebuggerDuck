@@ -28,10 +28,12 @@ module.exports.NODEPORT =  4040;
 
 if (!process.env.clientID) {
   var credentials = require('./env/config.js')
+}else{
+  var deployedUrl = 'https://food-runner2.herokuapp.com/facebook/oauth'
 }
 var clientID = process.env.clientID || credentials.facebook.clientID
 var clientSecret = process.env.clientSecret || credentials.facebook.clientSecret
-var callbackURL = process.env.callbackURL || credentials.facebook.callbackURL
+var callbackURL = deployedUrl || credentials.facebook.callbackURL
   passport.use(new Strategy({
     clientID: clientID,
     clientSecret: clientSecret,
