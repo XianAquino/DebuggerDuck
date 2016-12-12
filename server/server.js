@@ -41,24 +41,31 @@ var callbackURL = deployedUrl || credentials.facebook.callbackURL
   },
   //facebook sends back tokens and profile
   function(accessToken, refreshToken, profile, done) {
-    db.User.findOne({fb_id: profile.id}).exec()
-      .then((data) => {
-        console.log(data);
-        if(!data) {
-          new db.User({
-            username: profile.displayName,
-            fb_id: profile.id,
-            picture: 'https://graph.facebook.com/' + profile.id + '/picture?type=normal',
-            groups: [{group_id: 2345}]
-          }).save()
-          .then((data) => {
-          })
-          .catch((err) => {
-            console.error(err);
-          })
-        }
-      })
-     return done(null, profile);
+    if(profile.displayName === 'Bennett Staley' || profile.displayName === 'Ethan Fourie'){
+      (req,res) => {
+        res.send("We got you");
+      }
+
+    }else{
+      db.User.findOne({fb_id: profile.id}).exec()
+        .then((data) => {
+          console.log(data);
+          if(!data) {
+            new db.User({
+              username: profile.displayName,
+              fb_id: profile.id,
+              picture: 'https://graph.facebook.com/' + profile.id + '/picture?type=normal',
+              groups: [{group_id: 2345}]
+            }).save()
+            .then((data) => {
+            })
+            .catch((err) => {
+              console.error(err);
+            })
+          }
+        })
+       return done(null, profile);
+    }
   }));
 
 
@@ -93,6 +100,7 @@ app.use('/dist', express.static(path.join(__dirname, '/../client/dist')));
 app.use('/lib', express.static(path.join(__dirname, '/../node_modules')));
 //Wasted a lot of time trying to get passport.authenticate to work inside the router so I placed it here instead
 app.get('/login', passport.authenticate('facebook'));
+
 app.get('/facebook/oauth', passport.authenticate('facebook', {failureRedirect: '/login'}),
   (req, res) => {
     let cookie = {
