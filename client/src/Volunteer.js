@@ -18,7 +18,6 @@ class Volunteer extends Component {
     super(props);
     this.state = {
       pending: true,
-      requests: [],
       count:0
     };
   }
@@ -51,7 +50,8 @@ class Volunteer extends Component {
     )
     .then(response => {
       console.log('Request submitted: ', response.data);
-      this.getRequests(this.props.volunteer._id);
+      //this.getRequests(this.props.volunteer._id);
+      this.props.getCurrentData();
       socket.emit('request',{id:this.props.volunteer._id});
     })
     .catch(error => {
@@ -69,20 +69,20 @@ class Volunteer extends Component {
   }
 
 
-  getRequests(id) {
-    axios.get(`/api/request/${this.props.volunteer._id}`)
-      .then( response => {
-        console.log("reqqqqq gettttt", response.data[0].requests)
-        this.setState( {requests:response.data[0].requests} );
-        socket.on('requestAdded', (data) => {
-          console.log("resssssssssssss socketsssssssss",data[0].requests);
-          this.setState( {requests : data[0].requests} );
-        })
-    })
-    .catch(error => {
-        console.log('Error while getting groups: ', error);
-    })
-  }
+  // getRequests(id) {
+  //   axios.get(`/api/request/${this.props.volunteer._id}`)
+  //     .then( response => {
+  //       console.log("reqqqqq gettttt", response.data[0].requests)
+  //       this.setState( {requests:response.data[0].requests} );
+  //       socket.on('requestAdded', (data) => {
+  //         console.log("resssssssssssss socketsssssssss",data[0].requests);
+  //         this.setState( {requests : data[0].requests} );
+  //       })
+  //   })
+  //   .catch(error => {
+  //       console.log('Error while getting groups: ', error);
+  //   })
+  // }
 
   demilitarizeTime(time) {
     console.log(time)
@@ -101,14 +101,13 @@ class Volunteer extends Component {
     var difference =  getTimer(this.props.volunteer.time)
     //if getTimer returns a negative number, we'll send a post request through changePending to update its pending status to false
     difference > 0 ? null : this.removeMe()
-    this.getRequests(this.props.volunteer._id)
+    //this.getRequests(this.props.volunteer._id)
 
   }
 
 
   render() {
-    var requests = this.state.requests
-    var key = Math.random()
+    var requests = this.props.volunteer.requests
     if (this.state.pending) {
       if (requests.length) {
         return (

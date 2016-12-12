@@ -195,43 +195,10 @@ io.on('connection', function(socket){
 
 //Listens when a user sends a request
   socket.on('request', function(data){
-    console.log("sockets id",data.id);
-    controller.requests(data.id)
-      .then(requests => {
-        console.log("passs requessst!!!",requests)
-        io.emit("requestAdded", requests)
-      })
-
-
-    // console.log(data);
-    // controller.newRequest(data)
-    // .then((data) => {
-    //   console.log("save data",data)
-    //   io.emit('requestAdded', data);
-    // })
-    // .then(request => {
-    //   console.log(request,"request",request._id);
-    // });
-    //console.log("request sockets" ,id);
-    // controller.requests(id)
-    // .then(requests => {
-    //   socket.emit("requestAdded", requests)
-    // })
-    // .catch(err => {
-    //   console.log("Error", err);
-    // })
-  // var id;
-  //   socket.on('request', function(data){
-  //     id = data.id;
-  //   })
-  //   controller.requests(id)
-  //   .then(requests => {
-  //     console.log("passs requessst!!!",requests)
-  //     socket.emit("requestAdded", requests)
-  //   })
-  //   .catch(err => {
-  //     console.log("Error", err);
-  //   })
+    controller.volunteers()
+    .then(volunteers => {
+      io.emit("volunteerAdded", volunteers)
+    })
   })
 
 

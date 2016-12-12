@@ -55,6 +55,7 @@ var  VolunteerRequestContainer = (props)=>  {
             postRequest={props.postRequest}
             key={Math.random()}
             username={props.username}
+            getCurrentData={props.getCurrentData}
             //commenting out picture for now
             picture={props.picture}
             //This maps out the volunteers in the this.state.volunteers array into the child component, volunteer
