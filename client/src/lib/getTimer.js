@@ -4,7 +4,7 @@ function getTimer(end){
   var d = new Date()
   //get hours and minutes
   var hour = d.getHours()
-  var minute = d.getMinutes();
+  var minute = d.getMinutes()
   //need to split our end into an array of hour and minutes
   end = end.split(':')
   //set a new array with current hour/min
@@ -18,6 +18,8 @@ function getTimer(end){
     //update the counter for minutes after the first iteration
     counter = counter/60
     }
+    //we're adding 15 minutes worth of seconds onto this so it'll expire 15min after the time its supposed to
+    end[1] += 900
     //find out the difference between the two times, basically we're looking for if its a negative number or not
   var difference = ((end[0]+end[1])-(start[0]+start[1]))
 return difference

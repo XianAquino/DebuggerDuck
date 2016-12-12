@@ -28,22 +28,31 @@ class RequestModal extends React.Component {
   }
   onTextChange(event) {
     //every time the user types a new letter, the state is changed to the current input
+    //we check if there is anything in the text input field to see how we handle onTextChanges
+    if(!document.getElementById("text").value.length) {
     var value = event.target.value.split('__')
     var text = value[0]
     var price =  value[1]
     console.log('Request Event', text, price);
-    this.setState({text: text, price: price});
+    this.setState({text: text,price:price});
+  } else{
+    var textChange = event.target.value 
+    this.setState({text: textChange})
   }
+}
+onPriceChange(event){
+  var price = event.target.value
+  this.setState({price:price})
+
+}
 
   onSubmit () {
     //Don't change this invocation.
-    console.log('modal text?', this.state.text);
-    //check if there is anything inside our price input field, if there is, use that instead
-    var price = document.getElementById("price").value.length ? document.getElementById("price").value : this.state.price
-    //target and reset our price and text value fields after an onSubmit is fired
+    //we reset our two input fields
     document.getElementById("price").value = '';
     document.getElementById("text").value = '';
-    this.props.onSubmit(this.state.text, price);
+    this.props.onSubmit(this.state.text, this.state.price);
+
     //we select every menu selection thingy
     var list = document.getElementsByClassName('menu')
     //we then loop through our html collection which is an array but not an array, so we can't just forEach it
@@ -54,7 +63,8 @@ class RequestModal extends React.Component {
     this.hideModal();
     this.setState({
       isOpen: false,
-      text: ''
+      text: '',
+      price:null
     });
   }
 
@@ -127,9 +137,8 @@ class RequestModal extends React.Component {
                 <input
                   id="price"
                   type="number"
-                  min = "0"
-                  step = "any"
-                  max = "999"
+                  onChange={this.onPriceChange.bind(this)}
+                 
                 />
                
                 <br />
