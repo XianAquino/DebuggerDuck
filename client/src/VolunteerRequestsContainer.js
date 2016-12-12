@@ -29,7 +29,7 @@ var  VolunteerRequestContainer = (props)=>  {
       return(
         <div>
           <div>
-            <VolunteerModal  currentGroup={props.currentGroup} postVolunteer={props.postVolunteer} />
+            <VolunteerModal  updateKarma ={props.updateKarma} currentGroup={props.currentGroup} postVolunteer={props.postVolunteer} />
           </div>
           <div className='no-requests center'>No one has volunteered to grab food yet. Why don't you go first?</div>
           <div className='center'><button className='black-button new-group' onClick={props.selectDifferentGroup}>Select a different group</button></div>
@@ -43,7 +43,7 @@ var  VolunteerRequestContainer = (props)=>  {
 
      <div className='request-container'>
         <div>
-          <VolunteerModal  currentGroup={props.currentGroup} postVolunteer={props.postVolunteer} />
+          <VolunteerModal  updateKarma ={props.updateKarma} currentGroup={props.currentGroup} postVolunteer={props.postVolunteer} />
 
         </div>
         {props.currentData.filter(volunteer => volunteer.group_id === props.getIdFromGroupName(props.currentGroup) && (volunteer.pending===true))
@@ -51,9 +51,11 @@ var  VolunteerRequestContainer = (props)=>  {
             //Render one Volunteer component for each current volunteer in a given group.
             <Volunteer
             //I put math.random because react got angry at me
+            updateKarma ={props.updateKarma}
             postRequest={props.postRequest}
             key={Math.random()}
             username={props.username}
+            getCurrentData={props.getCurrentData}
             //commenting out picture for now
             picture={props.picture}
             //This maps out the volunteers in the this.state.volunteers array into the child component, volunteer

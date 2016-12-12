@@ -18,8 +18,8 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 // Check to see if there is a port environment variable or just use port 4040 instead
-module.exports.NODEPORT =  4040;
 
+var port = process.env.PORT || 4040;
 
 //OAuth strategies require a 'verify' function that receives accessToken
 //for accessing FB API. Function must invoke 'cb' with a user object
@@ -28,10 +28,12 @@ module.exports.NODEPORT =  4040;
 
 if (!process.env.clientID) {
   var credentials = require('./env/config.js')
+}else{
+  var deployedUrl = 'https://food-runner2.herokuapp.com/facebook/oauth'
 }
 var clientID = process.env.clientID || credentials.facebook.clientID
 var clientSecret = process.env.clientSecret || credentials.facebook.clientSecret
-var callbackURL = process.env.callbackURL || credentials.facebook.callbackURL
+var callbackURL = deployedUrl || credentials.facebook.callbackURL
   passport.use(new Strategy({
     clientID: clientID,
     clientSecret: clientSecret,
@@ -39,24 +41,25 @@ var callbackURL = process.env.callbackURL || credentials.facebook.callbackURL
   },
   //facebook sends back tokens and profile
   function(accessToken, refreshToken, profile, done) {
-    db.User.findOne({fb_id: profile.id}).exec()
-      .then((data) => {
-        console.log(data);
-        if(!data) {
-          new db.User({
-            username: profile.displayName,
-            fb_id: profile.id,
-            picture: 'https://graph.facebook.com/' + profile.id + '/picture?type=normal',
-            groups: [{group_id: 2345}]
-          }).save()
-          .then((data) => {
-          })
-          .catch((err) => {
-            console.error(err);
-          })
-        }
-      })
-     return done(null, profile);
+
+      db.User.findOne({fb_id: profile.id}).exec()
+        .then((data) => {
+          console.log(data);
+          if(!data) {
+            new db.User({
+              username: profile.displayName,
+              fb_id: profile.id,
+              picture: 'https://graph.facebook.com/' + profile.id + '/picture?type=normal',
+              groups: [{group_id: 2345}]
+            }).save()
+            .then((data) => {
+            })
+            .catch((err) => {
+              console.error(err);
+            })
+          }
+        })
+       return done(null, profile);
   }));
 
 
@@ -91,6 +94,7 @@ app.use('/dist', express.static(path.join(__dirname, '/../client/dist')));
 app.use('/lib', express.static(path.join(__dirname, '/../node_modules')));
 //Wasted a lot of time trying to get passport.authenticate to work inside the router so I placed it here instead
 app.get('/login', passport.authenticate('facebook'));
+
 app.get('/facebook/oauth', passport.authenticate('facebook', {failureRedirect: '/login'}),
   (req, res) => {
     let cookie = {
@@ -185,43 +189,10 @@ io.on('connection', function(socket){
 
 //Listens when a user sends a request
   socket.on('request', function(data){
-    console.log("sockets id",data.id);
-    controller.requests(data.id)
-      .then(requests => {
-        console.log("passs requessst!!!",requests)
-        io.emit("requestAdded", requests)
-      })
-
-
-    // console.log(data);
-    // controller.newRequest(data)
-    // .then((data) => {
-    //   console.log("save data",data)
-    //   io.emit('requestAdded', data);
-    // })
-    // .then(request => {
-    //   console.log(request,"request",request._id);
-    // });
-    //console.log("request sockets" ,id);
-    // controller.requests(id)
-    // .then(requests => {
-    //   socket.emit("requestAdded", requests)
-    // })
-    // .catch(err => {
-    //   console.log("Error", err);
-    // })
-  // var id;
-  //   socket.on('request', function(data){
-  //     id = data.id;
-  //   })
-  //   controller.requests(id)
-  //   .then(requests => {
-  //     console.log("passs requessst!!!",requests)
-  //     socket.emit("requestAdded", requests)
-  //   })
-  //   .catch(err => {
-  //     console.log("Error", err);
-  //   })
+    controller.volunteers()
+    .then(volunteers => {
+      io.emit("volunteerAdded", volunteers)
+    })
   })
 
 
@@ -231,8 +202,8 @@ io.on('connection', function(socket){
 
 });
 
-http.listen(4040, function(){
-  console.log('listening on *:4040');
+http.listen(port, function(){
+  console.log('listening on *:'+port);
 });
 
 

@@ -10,9 +10,6 @@ class NavBar extends Component {
     super(props);
     this.state = {
       loggedIn: false,
-      //I have not yet done anything with the karma besides hard code it as 0 and display it.
-      //This needs to be worked on.
-      karma: 3
     };
   }
 
@@ -41,7 +38,7 @@ class NavBar extends Component {
     		<div className='karma'>Karma: {this.props.karma}</div>
         <img className='nav-pic' src={this.props.picture} onClick={()=>{this.props.renderUserProfile()}}/>
         <div className='username'>{this.props.username} </div>
-       
+
     	</div>
   		);
   	}
