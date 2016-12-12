@@ -28,6 +28,7 @@ class RequestModal extends React.Component {
   }
   onTextChange(event) {
     //every time the user types a new letter, the state is changed to the current input
+    //we check if there is anything in the text input field to see how we handle onTextChanges
     if(!document.getElementById("text").value.length) {
     var value = event.target.value.split('__')
     var text = value[0]
@@ -35,15 +36,11 @@ class RequestModal extends React.Component {
     console.log('Request Event', text, price);
     this.setState({text: text,price:price});
   } else{
-    console.log('this is what text is becoming',event.target.value)
     var textChange = event.target.value 
-    var price = document.getElementById("price").value
-    console.log('price onTextChange',price)
     this.setState({text: textChange})
   }
 }
 onPriceChange(event){
-  console.log('pricechange!',event.target.value)
   var price = event.target.value
   this.setState({price:price})
 
@@ -51,7 +48,7 @@ onPriceChange(event){
 
   onSubmit () {
     //Don't change this invocation.
-    console.log('modal text?', this.state.text);
+    //we reset our two input fields
     document.getElementById("price").value = '';
     document.getElementById("text").value = '';
     this.props.onSubmit(this.state.text, this.state.price);
