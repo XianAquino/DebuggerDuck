@@ -1,9 +1,9 @@
-const { buildSchema } = require('graphql');
+const graphql = require('graphql');
+const GraphQLSchema = graphql.GraphQLSchema;
+const query = require('./query');
 
-const schema = buildSchema(`
-  type Query {
-    testQuery: String
-  }
-`);
+const schema = new GraphQLSchema({
+  query
+});
 
 module.exports = schema;

@@ -7,7 +7,8 @@
     "build": "./node_modules/.bin/gulp build",
     "server": "nodemon --ignore 'client/*.js' server/server.js",
     "watch": "./node_modules/.bin/gulp watch",
-    "lint": "./node_modules/.bin/eslint **/*.js **/*.jsx *.js *.jsx"
+    "lint": "./node_modules/.bin/eslint **/*.js **/*.jsx *.js *.jsx",
+    "graphql": "nodemon ./server/tempserver.js"
   },
   "devDependencies": {
     "eslint": "^3.19.0",

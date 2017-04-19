@@ -1,26 +1,28 @@
-const mongoose = require ('mongoose');
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const connection = require('./connection.js')
+const connection = require('./connection.js');
 const autoIncrement = require('mongoose-auto-increment');
 mongoose.Promise = global.Promise;
-//initializes a autoincrement to keep better track of our restaurants
+// initializes a autoincrement to keep better track of our restaurants
 autoIncrement.initialize(connection);
 
 // initiate a database variable to attach schemas to
 let db = {};
 
-const UserSchema = new Schema ({
-	//mongoose will automatically create a unique id, so no need to manually create one
+const UserSchema = new Schema({
+// mongoose will automatically create a unique id, so no need to manually create one
 	username: String,
 	fb_id: String,
 	picture: String,
-	groups: [{group_id: String, karma: {type: Number, default:0}}],
-	karma: {type: Number, default: 10}
+	groups: [{
+		group_id: String,
+		}],
+		karma: { type: Number, default: 10 }
 });
 
 var restaurantSchema = new Schema({
-  name : String,
-  menu : [ {menuItem: String, price:Number} ]
+  name: String,
+  menu: [ {menuItem: String, price:Number} ]
 });
 
 
