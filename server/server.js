@@ -8,6 +8,8 @@ const dbConnection = require('./db/connection.js');
 const session = require('express-session');
 const passport = require('passport');
 const Strategy = require('passport-facebook').Strategy;
+const graphqlHTTP = require('express-graphql');
+const schema = require('./graphql/schema.js');
 
 // Use express and export it
 const app = express();
@@ -85,6 +87,10 @@ app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true 
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use('/graphql', graphqlHTTP({
+  schema,
+  graphiql: true
+}));
 
 // Serve the static client HTML files
 app.use(express.static(path.join(__dirname, '/../client/public')));
@@ -103,6 +109,7 @@ app.get('/facebook/oauth', passport.authenticate('facebook', {failureRedirect: '
     }
     res.cookie('fr-session', cookie, { maxAge: 900000, httpOnly: true }).redirect('/');
 });
+
 //returns all restaurants in our database
 app.get('/restaurants',function(req,res){
   db.Restaurant.find({}, function(err, restaurants) {
@@ -165,8 +172,9 @@ app.get('/menuItem/:name',function(req,res){
 // Listen for requests on /api and then use the router to determine
 // what happens with the requests
 app.use('/api', router);
-
-
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/../client/public/index.html'));
+});
 
 io.on('connection', function(socket){
   console.log('a user connected');
