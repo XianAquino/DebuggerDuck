@@ -1,0 +1,227 @@
+html, body{
+  background-color: white;
+}
+body{
+  background-color: white;
+}
+/** ------------Landing page------------ **/
+
+
+
+.landing-side {
+  background: rgba(0, 0, 0, 0.8);
+  float:left;
+  width:600px;
+  height:100vh;
+}
+
+.landing-side h1, h2 {
+  background-color: transparent;
+}
+
+.landing-side h1 {
+  font-size: 50px;
+}
+
+.landing-side h2 {
+  font-size: 80px;
+  font-weight: bold;
+}
+.welcome {
+  background-color: transparent;
+  color:white;
+}
+
+.spacer {
+  background-color: transparent;
+}
+.tag-line {
+  background-color: transparent;
+}
+
+.tag-line p {
+  background-color: transparent;
+  font-size: 20px;
+  color: white;
+}
+
+.center-login {
+  margin:40px;
+  background-color: transparent;
+
+}
+
+/** ------------nav-bar------------ **/
+.nav-bar {
+	height:80px;
+	background-color:#e61000;
+	padding:10px;
+	color:white;
+	width:100%;
+}
+
+.nav-bar .karma, .username {
+  background-color: transparent;
+  color: white;
+}
+
+
+/** main **/
+.white-bg {
+  background-color: white;
+}
+
+.greeting {
+  background-color: white;
+}
+
+.group-select {
+  background-color: white;
+}
+.group {
+  background-color: white;
+}
+.group button {
+  background:#d32323;
+  color: white;
+  width: 400px;
+  margin: 10px;
+  border-radius: 10px ;
+}
+
+.center {
+  background-color: white;
+}
+
+
+.red-button {
+  background: linear-gradient(#b30000, #ff3333);
+  background: -webkit-linear-gradient(#b30000, #ff3333);
+  background: -o-linear-gradient(#b30000, #ff3333);
+  background: -moz-linear-gradient(#b30000, #ff3333);
+}
+
+
+.black-button {
+  color:white;
+	margin:8px;
+	border:none;
+	border-radius:8px;
+	padding:7px;
+	font-size:16px;
+	border:#808080 solid 1px;
+  position:relative;
+  background: linear-gradient(#1a1a1a, #4d4d4d);
+  background: -webkit-linear-gradient(#1a1a1a, #4d4d4d);
+  background: -o-linear-gradient(#1a1a1a, #4d4d4d);
+  background: -moz-linear-gradient(#1a1a1a, #4d4d4d);
+}
+
+
+/** ------------Group Page------------ **/
+
+.request-container {
+  background-color: white;
+}
+.volunteer-div {
+  background-color: #e9ebee;
+  box-shadow: 2px 5px 5px #333333;
+}
+.orange {
+  background-color: transparent;
+}
+
+.volunteer-div span {
+  background-color: transparent;
+  font-size:30px;
+}
+
+.volunteer-div .total{
+  font-weight: bold;
+  color:#cc0000;
+}
+
+.individual-request {
+  background-color: #e9ebee;
+}
+
+/** ------------User Profile------------ **/
+.user-profile {
+	position: absolute;
+	top:100px;
+	width:100%;
+  height:100vh;
+	left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+	background-color:white;
+}
+
+.user-profile h1, p, li, i{
+  background-color: transparent;
+}
+
+.user-profile h1 {
+  text-align: center;
+  font-size: 50px;
+  margin: 0 0 20px 0 ;
+
+}
+
+.user-volunteer-list , ul,li {
+  background-color: white;
+}
+.user-requests {
+  background-color: transparent;
+
+}
+.profile-left {
+  background-color: transparent;
+  float:left;
+  margin:0 0 0 150px;
+
+}
+.profile-left img{
+  margin: 10px 0 0 100px;
+  width :150px;
+}
+.profile-left .user-name{
+  margin: 20px 0 30px 50px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
+
+}
+
+.user-history {
+  margin:5px 160px 0 0;
+  background-color: transparent;
+  float:right;
+
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+}
+
+svg{
+  background-color: white;
+  margin:0 0 0 10px;
+  color: white;
+}
+
+svg text {
+  color: white;
+  font-size: 20px;
+}
+.history-header {
+  color: #d32323;
+}
+
+.exit {
+  text-align: center;
+  width: 40px;
+  border-radius: 50%;
+}

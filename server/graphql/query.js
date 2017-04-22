@@ -1,7 +1,7 @@
 const graphql = require('graphql');
 const { GraphQLSchema, GraphQLObjectType, GraphQLInt, GraphQLString } = graphql;
-const db = require('../db/schemas');
 const userType = require('./types/user');
+const User = require('../models/user');
 
 const query = new GraphQLObjectType({
   name: 'Query',
@@ -13,7 +13,7 @@ const query = new GraphQLObjectType({
         id: { type: GraphQLString }
       },
       resolve: (_, args) => {
-        return db.User.findOne({_id: args.id});
+        return User.getInfo()
       }
     }
   }
