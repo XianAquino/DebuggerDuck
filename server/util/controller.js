@@ -43,10 +43,10 @@ module.exports = {
         })
     },
     loggedIn: (req, res) => {
-      if (req.user.id) {
+      if (req.sessionID) {
         res.send(true);
       } else {
-        res.send(false);
+        res.sendStatus(401);
       }
     },
     logout: (req, res) => {
@@ -139,7 +139,7 @@ module.exports = {
       db.User.findOneAndUpdate({username: req.body.data.username}, { $inc: { karma: 5 } }, {upsert: false})
       .then((data) => {
         console.log("db data!!!!", data) //we want data.order_user
-       
+
       })
       .catch((err) => {
         console.log(err)
@@ -173,7 +173,7 @@ module.exports = {
       db.User.findOneAndUpdate({username: req.body.data.username}, { $inc: { karma: -1 } }, {upsert: false})
       .then((data) => {
         console.log("db data!!!!", data) //we want data.order_user
-       
+
       })
       .catch((err) => {
         console.log(err)
